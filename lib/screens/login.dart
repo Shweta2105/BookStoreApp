@@ -125,7 +125,30 @@ class _LoginScreenState extends State<LoginScreen> {
                           email: emailEditingController.text,
                           password: passwordEditingController.text,
                         );
-                      } on UserNotFoundException {}
+                        final user = AuthService.firebase().currentUser;
+                        if (user != null) {
+                          Navigator.of(context)
+                              .pushNamed('/home', arguments: (_) => false);
+                        }
+                      } on UserNotFoundException catch (e) {
+                        showDialog(
+                            context: context,
+                            builder: (context) {
+                              return const Text('User not found');
+                            });
+                      } on WrongPasswordAuthException catch (e) {
+                        showDialog(
+                            context: context,
+                            builder: (context) {
+                              return const Text('Wrong Password');
+                            });
+                      } on GenericAuthException catch (e) {
+                        showDialog(
+                            context: context,
+                            builder: (context) {
+                              return Text('failed to search user.. try again');
+                            });
+                      }
                     }
                     //loginUser
                     ),
@@ -164,3 +187,5 @@ class _LoginScreenState extends State<LoginScreen> {
     ]);
   }
 }
+
+enum MenuAction { logout }

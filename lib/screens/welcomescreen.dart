@@ -37,9 +37,10 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
           RaisedButton(
             color: Colors.transparent,
             onPressed: () {
+              //Navigator.pushNamed(context, '/home');
               final user = AuthService.firebase().currentUser;
               if (user != null) {
-                Navigator.pushNamed(context, '/homescreen');
+                Navigator.pushNamed(context, '/home');
               } else {
                 Navigator.pushNamed(context, '/login');
               }

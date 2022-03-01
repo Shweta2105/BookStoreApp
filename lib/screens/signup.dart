@@ -1,3 +1,5 @@
+import 'package:bookstoreapp/service/auth/auth_exception.dart';
+import 'package:bookstoreapp/service/auth/auth_service.dart';
 import 'package:bookstoreapp/utils/constants.dart';
 import 'package:bookstoreapp/utils/userentrytextfield.dart';
 import 'package:flutter/cupertino.dart';
@@ -123,7 +125,40 @@ class _SignupScreenState extends State<SignupScreen> {
                         style: TextStyle(
                           fontSize: 20,
                         )),
-                    onPressed: () {}
+                    onPressed: () async {
+                      try {
+                        await AuthService.firebase().createUser(
+                          email: emailEditingController.text,
+                          password: passwordEditingController.text,
+                        );
+                        Navigator.pushNamed(context, '/login');
+                      } on WeakPasswordAuthException catch (e) {
+                        showDialog(
+                            context: context,
+                            builder: (context) {
+                              return const Text('Weak Password');
+                            });
+                      } on EmailAlreadyInUseAuthException catch (e) {
+                        showDialog(
+                            context: context,
+                            builder: (context) {
+                              return const Text(
+                                  'This Email is Already in use. ');
+                            });
+                      } on InvalidEmailAuthException catch (e) {
+                        showDialog(
+                            context: context,
+                            builder: (context) {
+                              return const Text('Invalid Email Id');
+                            });
+                      } on GenericAuthException catch (e) {
+                        showDialog(
+                            context: context,
+                            builder: (context) {
+                              return const Text('Failed to register');
+                            });
+                      }
+                    }
                     //loginUser
                     ),
               ),

@@ -1,3 +1,4 @@
+import 'package:bookstoreapp/screens/home.dart';
 import 'package:bookstoreapp/screens/login.dart';
 import 'package:bookstoreapp/screens/signup.dart';
 import 'package:bookstoreapp/screens/welcomescreen.dart';
@@ -24,6 +25,7 @@ class MyApp extends StatelessWidget {
         routes: {
           '/login': (context) => const LoginScreen(),
           '/signup': (context) => const SignupScreen(),
+          '/home': (context) => HomeScreen(),
         });
   }
 }
