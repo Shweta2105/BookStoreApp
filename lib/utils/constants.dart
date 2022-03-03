@@ -5,7 +5,11 @@ enum MenuAction { logout, wishList, orders }
 EdgeInsets appMargin() =>
     EdgeInsets.only(top: 10, left: 15, right: 15, bottom: 12);
 
+EdgeInsets boxMargin() => const EdgeInsets.fromLTRB(10, 10, 10, 10);
+
 final titleColor = Colors.orange.withOpacity(0.8);
+final white = Colors.white;
+final transparent = Colors.transparent;
 
 const fontL = 25.0;
 const fontM = 20.0;

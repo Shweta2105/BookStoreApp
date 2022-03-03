@@ -42,9 +42,9 @@ class _LoginScreenState extends State<LoginScreen> {
         fit: BoxFit.cover,
       ),
       Scaffold(
-        backgroundColor: Colors.transparent,
+        backgroundColor: Color.fromARGB(0, 230, 116, 116),
         appBar: AppBar(
-          backgroundColor: Colors.transparent,
+          backgroundColor: transparent,
           elevation: 0.0,
           automaticallyImplyLeading: false,
           title: Text(
@@ -68,7 +68,7 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               Container(
                 height: heightXl,
-                padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
+                padding: boxMargin(),
                 child: UserEntryTextField(
                   obscureText: false,
                   controller: emailEditingController,
@@ -80,7 +80,7 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               Container(
                 height: heightXl,
-                padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
+                padding: boxMargin(),
                 child: UserEntryTextField(
                   obscureText: true,
                   controller: passwordEditingController,
@@ -92,10 +92,10 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               Container(
                 height: heightL,
-                padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
+                padding: boxMargin(),
                 child: RaisedButton(
-                    textColor: Colors.white,
-                    color: Colors.transparent,
+                    textColor: white,
+                    color: transparent,
                     child: const Text('Login',
                         style: TextStyle(
                           fontSize: fontM,
@@ -138,7 +138,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
                 child: FlatButton(
                     textColor: titleColor,
-                    color: Colors.transparent,
+                    color: transparent,
                     child: const Text('Sign in',
                         style: TextStyle(
                           fontSize: fontM,

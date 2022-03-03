@@ -29,9 +29,9 @@ class _SignupScreenState extends State<SignupScreen> {
         fit: BoxFit.cover,
       ),
       Scaffold(
-        backgroundColor: Colors.transparent,
+        backgroundColor: transparent,
         appBar: AppBar(
-          backgroundColor: Colors.transparent,
+          backgroundColor: transparent,
           elevation: 0.0,
           automaticallyImplyLeading: false,
           title: Text(
@@ -58,7 +58,7 @@ class _SignupScreenState extends State<SignupScreen> {
               ),
               Container(
                 height: heightXl,
-                padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
+                padding: boxMargin(),
                 child: UserEntryTextField(
                   obscureText: false,
                   controller: nameEditingController,
@@ -70,7 +70,7 @@ class _SignupScreenState extends State<SignupScreen> {
               ),
               Container(
                 height: heightXl,
-                padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
+                padding: boxMargin(),
                 child: UserEntryTextField(
                   obscureText: false,
                   controller: emailEditingController,
@@ -82,7 +82,7 @@ class _SignupScreenState extends State<SignupScreen> {
               ),
               Container(
                 height: heightXl,
-                padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
+                padding: boxMargin(),
                 child: UserEntryTextField(
                   obscureText: true,
                   controller: passwordEditingController,
@@ -94,10 +94,10 @@ class _SignupScreenState extends State<SignupScreen> {
               ),
               Container(
                 height: heightL,
-                padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
+                padding: boxMargin(),
                 child: RaisedButton(
-                    textColor: Colors.white,
-                    color: Colors.transparent,
+                    textColor: white,
+                    color: transparent,
                     child: const Text('Sign In',
                         style: TextStyle(
                           fontSize: fontM,
@@ -136,10 +136,10 @@ class _SignupScreenState extends State<SignupScreen> {
               ),
               Container(
                 height: heightL,
-                padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
+                padding: boxMargin(),
                 child: FlatButton(
                     textColor: titleColor,
-                    color: Colors.transparent,
+                    color: transparent,
                     child: const Text('Sign Up with Google',
                         style: TextStyle(
                           fontSize: fontM,
