@@ -45,20 +45,20 @@ class _SignupScreenState extends State<SignupScreen> {
           child: Column(
             children: <Widget>[
               SizedBox(
-                height: 30,
+                height: heightM,
               ),
               Text(
                 "BookStoreApp",
                 style: TextStyle(
-                    fontSize: 25,
+                    fontSize: fontL,
                     fontWeight: FontWeight.bold,
-                    color: Colors.orange.withOpacity(0.8)),
+                    color: titleColor),
               ),
               SizedBox(
-                height: 30,
+                height: heightM,
               ),
               Container(
-                height: 100,
+                height: heightXl,
                 padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
                 child: UserEntryTextField(
                   obscureText: false,
@@ -67,10 +67,10 @@ class _SignupScreenState extends State<SignupScreen> {
                 ),
               ),
               SizedBox(
-                height: 30,
+                height: heightM,
               ),
               Container(
-                height: 100,
+                height: heightXl,
                 padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
                 child: UserEntryTextField(
                   obscureText: false,
@@ -79,10 +79,10 @@ class _SignupScreenState extends State<SignupScreen> {
                 ),
               ),
               SizedBox(
-                height: 30,
+                height: heightM,
               ),
               Container(
-                height: 100,
+                height: heightXl,
                 padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
                 child: UserEntryTextField(
                   obscureText: true,
@@ -91,17 +91,17 @@ class _SignupScreenState extends State<SignupScreen> {
                 ),
               ),
               SizedBox(
-                height: 30,
+                height: heightM,
               ),
               Container(
-                height: 50,
+                height: heightL,
                 padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
                 child: RaisedButton(
                     textColor: Colors.white,
                     color: Colors.transparent,
                     child: const Text('Sign In',
                         style: TextStyle(
-                          fontSize: 20,
+                          fontSize: fontM,
                         )),
                     onPressed: () async {
                       try {
@@ -112,55 +112,38 @@ class _SignupScreenState extends State<SignupScreen> {
                         );
                         Navigator.pushNamed(context, '/login');
                       } on WeakPasswordAuthException catch (e) {
-                        showDialog(
-                            context: context,
-                            builder: (context) {
-                              return const Text('Weak Password');
-                            });
+                        showErrorDialog(context, 'Weak Password');
                       } on EmailAlreadyInUseAuthException catch (e) {
-                        showDialog(
-                            context: context,
-                            builder: (context) {
-                              return const Text(
-                                  'This Email is Already in use. ');
-                            });
+                        showErrorDialog(
+                            context, 'This Email is Already in use. ');
                       } on InvalidEmailAuthException catch (e) {
-                        showDialog(
-                            context: context,
-                            builder: (context) {
-                              return const Text('Invalid Email Id');
-                            });
+                        showErrorDialog(context, 'Invalid Email Id');
                       } on GenericAuthException catch (e) {
-                        showDialog(
-                            context: context,
-                            builder: (context) {
-                              return const Text('Failed to register');
-                            });
+                        showErrorDialog(context, 'Failed to register');
                       }
                     }
                     //loginUser
                     ),
               ),
               SizedBox(
-                height: 30,
+                height: heightM,
               ),
               Text(
                 'Or',
-                style: TextStyle(
-                    fontSize: 15, color: Colors.orange.withOpacity(0.8)),
+                style: TextStyle(fontSize: fontM, color: titleColor),
               ),
               SizedBox(
-                height: 20,
+                height: heightM,
               ),
               Container(
-                height: 50,
+                height: heightL,
                 padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
                 child: FlatButton(
-                    textColor: Colors.orange.withOpacity(0.8),
+                    textColor: titleColor,
                     color: Colors.transparent,
                     child: const Text('Sign Up with Google',
                         style: TextStyle(
-                          fontSize: 20,
+                          fontSize: fontM,
                         )),
                     onPressed: () {
                       Navigator.pushNamed(context, '/signup');

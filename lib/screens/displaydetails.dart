@@ -1,4 +1,5 @@
 import 'package:bookstoreapp/model/books.dart';
+import 'package:bookstoreapp/utils/constants.dart';
 import 'package:flutter/material.dart';
 
 class DisplayDetails extends StatelessWidget {
@@ -12,7 +13,7 @@ class DisplayDetails extends StatelessWidget {
     return Center(
       child: Text(
         books.title!,
-        style: const TextStyle(fontSize: 20),
+        style: const TextStyle(fontSize: fontM),
       ),
     );
   }

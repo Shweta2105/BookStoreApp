@@ -50,7 +50,7 @@ class _LoginScreenState extends State<LoginScreen> {
           automaticallyImplyLeading: false,
           title: Text(
             "Login",
-            style: TextStyle(fontSize: 25),
+            style: TextStyle(fontSize: fontL),
           ),
           centerTitle: true,
         ),
@@ -60,15 +60,15 @@ class _LoginScreenState extends State<LoginScreen> {
               Text(
                 "BookStoreApp",
                 style: TextStyle(
-                    fontSize: 25,
+                    fontSize: fontL,
                     fontWeight: FontWeight.bold,
-                    color: Colors.orange.withOpacity(0.8)),
+                    color: titleColor),
               ),
               SizedBox(
-                height: 30,
+                height: heightM,
               ),
               Container(
-                height: 100,
+                height: heightXl,
                 padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
                 child: UserEntryTextField(
                   obscureText: false,
@@ -77,10 +77,10 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
               ),
               SizedBox(
-                height: 30,
+                height: heightM,
               ),
               Container(
-                height: 100,
+                height: heightXl,
                 padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
                 child: UserEntryTextField(
                   obscureText: true,
@@ -89,17 +89,17 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
               ),
               SizedBox(
-                height: 30,
+                height: heightM,
               ),
               Container(
-                height: 50,
+                height: heightL,
                 padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
                 child: RaisedButton(
                     textColor: Colors.white,
                     color: Colors.transparent,
                     child: const Text('Login',
                         style: TextStyle(
-                          fontSize: 20,
+                          fontSize: fontM,
                         )),
                     onPressed: () async {
                       try {
@@ -113,48 +113,36 @@ class _LoginScreenState extends State<LoginScreen> {
                               .pushNamed('/home', arguments: (_) => false);
                         }
                       } on UserNotFoundException catch (e) {
-                        showDialog(
-                            context: context,
-                            builder: (context) {
-                              return const Text('User not found');
-                            });
+                        showErrorDialog(context, 'User not found');
                       } on WrongPasswordAuthException catch (e) {
-                        showDialog(
-                            context: context,
-                            builder: (context) {
-                              return const Text('Wrong Password');
-                            });
+                        showErrorDialog(context, 'Wrong Password');
                       } on GenericAuthException catch (e) {
-                        showDialog(
-                            context: context,
-                            builder: (context) {
-                              return Text('failed to search user.. try again');
-                            });
+                        showErrorDialog(
+                            context, 'failed to search user.. try again');
                       }
                     }
                     //loginUser
                     ),
               ),
               SizedBox(
-                height: 30,
+                height: heightM,
               ),
               Text(
                 'Does not have account?',
-                style: TextStyle(
-                    fontSize: 15, color: Colors.orange.withOpacity(0.8)),
+                style: TextStyle(fontSize: 15, color: titleColor),
               ),
               SizedBox(
-                height: 20,
+                height: heightM,
               ),
               Container(
-                height: 50,
+                height: heightL,
                 padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
                 child: FlatButton(
-                    textColor: Colors.orange.withOpacity(0.8),
+                    textColor: titleColor,
                     color: Colors.transparent,
                     child: const Text('Sign in',
                         style: TextStyle(
-                          fontSize: 20,
+                          fontSize: fontM,
                         )),
                     onPressed: () {
                       Navigator.pushNamed(context, '/signup');
