@@ -2,7 +2,6 @@ import 'package:bookstoreapp/service/auth/auth_exception.dart';
 import 'package:bookstoreapp/service/auth/auth_service.dart';
 import 'package:bookstoreapp/utils/constants.dart';
 import 'package:bookstoreapp/utils/userentrytextfield.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class SignupScreen extends StatefulWidget {
