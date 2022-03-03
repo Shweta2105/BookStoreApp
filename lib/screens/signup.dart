@@ -62,12 +62,8 @@ class _SignupScreenState extends State<SignupScreen> {
                 padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
                 child: UserEntryTextField(
                   obscureText: false,
-                  checkValidation: (String value) {
-                    nameValid = value.length <= 15;
-                  },
                   controller: nameEditingController,
                   labelText: 'Name',
-                  isValid: nameValid,
                 ),
               ),
               SizedBox(
@@ -78,17 +74,8 @@ class _SignupScreenState extends State<SignupScreen> {
                 padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
                 child: UserEntryTextField(
                   obscureText: false,
-                  checkValidation: (value) {
-                    if (emailRegExp.hasMatch(value)) {
-                      emailValid = true;
-                    } else {
-                      emailValid = false;
-                    }
-                    setState(() {});
-                  },
                   controller: emailEditingController,
                   labelText: 'Email',
-                  isValid: emailValid,
                 ),
               ),
               SizedBox(
@@ -99,17 +86,8 @@ class _SignupScreenState extends State<SignupScreen> {
                 padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
                 child: UserEntryTextField(
                   obscureText: true,
-                  checkValidation: (value) {
-                    if (passwordRegExp.hasMatch(value)) {
-                      passwordValid = true;
-                    } else {
-                      passwordValid = false;
-                    }
-                    setState(() {});
-                  },
                   controller: passwordEditingController,
                   labelText: 'Password',
-                  isValid: passwordValid,
                 ),
               ),
               SizedBox(
@@ -130,6 +108,7 @@ class _SignupScreenState extends State<SignupScreen> {
                         await AuthService.firebase().createUser(
                           email: emailEditingController.text,
                           password: passwordEditingController.text,
+                          name: nameEditingController.text,
                         );
                         Navigator.pushNamed(context, '/login');
                       } on WeakPasswordAuthException catch (e) {

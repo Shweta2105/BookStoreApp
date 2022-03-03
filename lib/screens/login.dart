@@ -72,17 +72,8 @@ class _LoginScreenState extends State<LoginScreen> {
                 padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
                 child: UserEntryTextField(
                   obscureText: false,
-                  checkValidation: (value) {
-                    if (emailRegExp.hasMatch(value)) {
-                      emailValid = true;
-                    } else {
-                      emailValid = false;
-                    }
-                    setState(() {});
-                  },
                   controller: emailEditingController,
                   labelText: 'Email',
-                  isValid: emailValid,
                 ),
               ),
               SizedBox(
@@ -93,17 +84,8 @@ class _LoginScreenState extends State<LoginScreen> {
                 padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
                 child: UserEntryTextField(
                   obscureText: true,
-                  checkValidation: (value) {
-                    if (passwordRegExp.hasMatch(value)) {
-                      passwordValid = true;
-                    } else {
-                      passwordValid = false;
-                    }
-                    setState(() {});
-                  },
                   controller: passwordEditingController,
                   labelText: 'Password',
-                  isValid: passwordValid,
                 ),
               ),
               SizedBox(

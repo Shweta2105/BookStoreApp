@@ -2,7 +2,8 @@ import 'package:bookstoreapp/service/auth/auth_user.dart';
 import 'package:bookstoreapp/service/auth/auth_provider.dart';
 import 'package:bookstoreapp/service/auth/auth_exception.dart';
 import 'package:firebase_auth/firebase_auth.dart'
-    show FirebaseAuth, FirebaseAuthException;
+    show FirebaseAuth, FirebaseAuthException, UserCredential;
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 class FirebaseAuthProvider implements AuthProvider {
@@ -12,12 +13,24 @@ class FirebaseAuthProvider implements AuthProvider {
   }
 
   @override
-  Future<AuthUser> createUser(
-      {required String email, required String password}) async {
+  Future<AuthUser> createUser({
+    required String email,
+    required String password,
+    required String name,
+  }) async {
     try {
-      await FirebaseAuth.instance
+      UserCredential data = await FirebaseAuth.instance
           .createUserWithEmailAndPassword(email: email, password: password);
       final user = currentUser;
+      await FirebaseFirestore.instance
+          .collection('AuthUsers')
+          .doc(data.user!.uid)
+          .set({
+        'name': name,
+        'uid': data.user!.uid,
+        'email': email,
+        'password': password,
+      });
 
       if (user != null) {
         return user;
