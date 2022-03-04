@@ -8,8 +8,17 @@ class Books {
   String? title;
   String? author;
   String? price;
+  List? wishlist;
+  List? orders;
 
-  Books({this.id, this.image, this.title, this.author, this.price});
+  Books(
+      {this.id,
+      this.image,
+      this.title,
+      this.author,
+      this.price,
+      this.wishlist,
+      this.orders});
 
   factory Books.fromJson(Map<String, dynamic> json) {
     return Books(
@@ -17,6 +26,8 @@ class Books {
         image: json['image'],
         title: json['title'],
         author: json['author'],
-        price: json['price']);
+        price: json['price'],
+        wishlist: json['wishlist'],
+        orders: json['orders']);
   }
 }

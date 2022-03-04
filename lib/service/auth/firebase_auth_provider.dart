@@ -1,3 +1,4 @@
+import 'package:bookstoreapp/model/books.dart';
 import 'package:bookstoreapp/service/auth/auth_user.dart';
 import 'package:bookstoreapp/service/auth/auth_provider.dart';
 import 'package:bookstoreapp/service/auth/auth_exception.dart';
@@ -17,6 +18,8 @@ class FirebaseAuthProvider implements AuthProvider {
     required String email,
     required String password,
     required String name,
+    required List<Books> wishlist,
+    required List<Books> orders,
   }) async {
     try {
       UserCredential data = await FirebaseAuth.instance
@@ -30,6 +33,8 @@ class FirebaseAuthProvider implements AuthProvider {
         'uid': data.user!.uid,
         'email': email,
         'password': password,
+        'wishlist': wishlist,
+        'orders': orders
       });
 
       if (user != null) {
@@ -99,5 +104,17 @@ class FirebaseAuthProvider implements AuthProvider {
     } else {
       throw UserNotLoggedInException();
     }
+  }
+
+  @override
+  Future<void> updateWishlist({Books? book}) async {
+    final user = FirebaseAuth.instance.currentUser;
+
+    // final wishlist = await FirebaseFirestore.instance
+    //     .collection('AuthUsers')
+    //     .doc(user!.uid)
+    //     .collection('wishlist')
+    //     .add({'wishlist': book});
+    // print("${wishlist}");
   }
 }

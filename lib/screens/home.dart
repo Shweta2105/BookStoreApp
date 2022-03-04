@@ -47,7 +47,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   customAppBar(BuildContext context) {
     return AppBar(
-      backgroundColor: Colors.white,
+      backgroundColor: Color.fromARGB(255, 128, 10, 2),
       elevation: 1,
       bottom: PreferredSize(
         preferredSize: Size.fromHeight(20),
@@ -56,7 +56,7 @@ class _HomeScreenState extends State<HomeScreen> {
           height: heightL,
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
-              color: Colors.white,
+              color: white,
               boxShadow: const [
                 BoxShadow(
                   color: Colors.grey,
@@ -85,6 +85,9 @@ class _HomeScreenState extends State<HomeScreen> {
                     controller: searchcontroller,
                   ),
                 ),
+                IconButton(
+                    onPressed: () {},
+                    icon: const Icon(Icons.shopping_cart_outlined)),
                 const CustomPopMenu()
               ],
             ),
@@ -94,8 +97,10 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  ListView displayList() {
-    return ListView.builder(
+  GridView displayList() {
+    return GridView.builder(
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2, childAspectRatio: 2 / 3),
         itemCount: _books.length,
         itemBuilder: (BuildContext context, int index) {
           Books book = _books[index];

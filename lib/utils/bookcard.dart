@@ -1,5 +1,6 @@
 import 'package:bookstoreapp/model/books.dart';
 import 'package:bookstoreapp/screens/displaydetails.dart';
+import 'package:bookstoreapp/utils/constants.dart';
 import 'package:flutter/material.dart';
 
 class BookCard extends StatelessWidget {
@@ -19,63 +20,91 @@ class BookCard extends StatelessWidget {
                 )));
       },
       child: Container(
-        margin: EdgeInsets.all(40),
-        height: 200,
-        width: 200,
+        margin: EdgeInsets.all(10),
+        padding: EdgeInsets.only(left: 5, right: 5),
+        height: 300,
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(5),
+          boxShadow: const [
+            BoxShadow(
+              offset: Offset(0, 10),
+              blurRadius: 33,
+              color: Colors.blueGrey,
+            ),
+          ],
+        ),
+        // width: 100,
         child: Stack(
           children: <Widget>[
             Positioned(
-              child: Container(
-                height: 220,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(29),
-                  boxShadow: const [
-                    BoxShadow(
-                      offset: Offset(0, 10),
-                      blurRadius: 33,
-                      color: Colors.blueGrey,
-                    ),
-                  ],
-                ),
+              left: 30,
+              child: Image.asset(
+                book.image!,
+                // showData[index]['image'],
+                width: 110,
+                height: 150,
+                fit: BoxFit.cover,
               ),
             ),
-            Image.asset(
-              book.image!,
-              // showData[index]['image'],
-              width: 130,
-              height: 180,
-              fit: BoxFit.cover,
-            ),
             Positioned(
-                right: 10,
-                bottom: 10,
-                child: Row(
-                  children: <Widget>[
-                    IconButton(
-                        onPressed: () {},
-                        icon: Icon(Icons.favorite_outline_outlined))
+                top: 160,
+                left: 10,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      book.title!,
+                      style: const TextStyle(
+                          fontSize: fontS, fontWeight: FontWeight.bold),
+                    ),
+                    Text(
+                      book.author!,
+                      style: const TextStyle(
+                        fontSize: fontS,
+                      ),
+                    ),
+                    Text(
+                      "Rs.${book.price!} ",
+                      style: const TextStyle(
+                        fontSize: fontS,
+                      ),
+                    ),
                   ],
                 )),
             Positioned(
-              top: 20,
-              left: 150,
-              child: RichText(
-                text: TextSpan(
-                  style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold),
-                  text: book.title,
+                left: 10,
+                bottom: 5,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    TextSpan(text: '\n\n'),
-                    TextSpan(
-                        text: book.author,
-                        style: TextStyle(fontWeight: FontWeight.normal)),
+                    SizedBox(
+                        width: 80,
+                        height: 30,
+                        child: RaisedButton(
+                          color: titleColor,
+                          onPressed: () {},
+                          child: Text(
+                            "ADD TO BAG",
+                            style: TextStyle(
+                              fontSize: 10,
+                            ),
+                          ),
+                        )),
+                    SizedBox(
+                        width: 80,
+                        height: 30,
+                        child: RaisedButton(
+                          onPressed: () {},
+                          child: Text(
+                            "WishList",
+                            style: TextStyle(
+                              fontSize: 10,
+                            ),
+                          ),
+                        )),
                   ],
-                ),
-              ),
-            )
+                ))
           ],
         ),
       ),

@@ -104,12 +104,7 @@ class _SignupScreenState extends State<SignupScreen> {
                         )),
                     onPressed: () async {
                       try {
-                        await AuthService.firebase().createUser(
-                          email: emailEditingController.text,
-                          password: passwordEditingController.text,
-                          name: nameEditingController.text,
-                        );
-                        Navigator.pushNamed(context, '/login');
+                        await signup(context);
                       } on WeakPasswordAuthException catch (e) {
                         showErrorDialog(context, 'Weak Password');
                       } on EmailAlreadyInUseAuthException catch (e) {
@@ -155,5 +150,17 @@ class _SignupScreenState extends State<SignupScreen> {
         ),
       ),
     ]);
+  }
+
+  Future<void> signup(BuildContext context) async {
+    final user = await AuthService.firebase().createUser(
+      email: emailEditingController.text,
+      password: passwordEditingController.text,
+      name: nameEditingController.text,
+      wishlist: [],
+      orders: [],
+    );
+
+    Navigator.pushNamed(context, '/login');
   }
 }

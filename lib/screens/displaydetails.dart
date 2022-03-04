@@ -1,4 +1,6 @@
 import 'package:bookstoreapp/model/books.dart';
+import 'package:bookstoreapp/service/auth/auth_service.dart';
+import 'package:bookstoreapp/utils/buttons.dart';
 import 'package:bookstoreapp/utils/constants.dart';
 import 'package:flutter/material.dart';
 
@@ -32,7 +34,7 @@ class DisplayDetails extends StatelessWidget {
                     children: <Widget>[
                       bookBox(),
                       bookDescription(),
-                      buttonsToCart()
+                      buttonsToCart(books)
                     ],
                   )),
               bookImage()
@@ -106,7 +108,7 @@ class DisplayDetails extends StatelessWidget {
     );
   }
 
-  Positioned buttonsToCart() {
+  Positioned buttonsToCart(Books book) {
     return Positioned(
         bottom: 50,
         left: 50,
@@ -116,37 +118,7 @@ class DisplayDetails extends StatelessWidget {
             SizedBox(
               width: 20,
             ),
-            wishlistButton()
-          ],
-        ));
-  }
-
-  RaisedButton cartButton() {
-    return RaisedButton(
-      onPressed: () {},
-      child: Text(
-        'Add to Cart',
-        style: const TextStyle(
-          fontSize: fontS,
-        ),
-      ),
-      color: titleColor,
-    );
-  }
-
-  TextButton wishlistButton() {
-    return TextButton(
-        onPressed: () {},
-        child: Row(
-          children: [
-            Text(
-              'Add to WishList',
-              style: TextStyle(color: black),
-            ),
-            Icon(
-              Icons.favorite_outline_outlined,
-              color: black,
-            ),
+            wishlistButton(book)
           ],
         ));
   }
