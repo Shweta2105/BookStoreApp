@@ -30,101 +30,124 @@ class DisplayDetails extends StatelessWidget {
                   margin: boxMargin2(),
                   child: Stack(
                     children: <Widget>[
-                      Positioned(
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(29),
-                            boxShadow: const [
-                              BoxShadow(
-                                offset: Offset(0, 10),
-                                blurRadius: 33,
-                                color: Colors.blueGrey,
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      Positioned(
-                          top: 400,
-                          left: 100,
-                          child: Column(
-                            children: <Widget>[
-                              Text(
-                                books.title!,
-                                style: const TextStyle(
-                                    fontSize: fontM,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                              SizedBox(
-                                height: 10,
-                              ),
-                              Text(
-                                books.author!,
-                                style: const TextStyle(
-                                  fontSize: fontM,
-                                ),
-                              ),
-                              SizedBox(
-                                height: 10,
-                              ),
-                              Text(
-                                "Rs.${books.price!} ",
-                                style: const TextStyle(
-                                  fontSize: fontM,
-                                ),
-                              ),
-                            ],
-                          )),
-                      Positioned(
-                          bottom: 50,
-                          left: 50,
-                          child: Row(
-                            children: <Widget>[
-                              RaisedButton(
-                                onPressed: () {},
-                                child: Text(
-                                  'Add to Cart',
-                                  style: const TextStyle(
-                                    fontSize: fontS,
-                                  ),
-                                ),
-                                color: titleColor,
-                              ),
-                              SizedBox(
-                                width: 20,
-                              ),
-                              TextButton(
-                                  onPressed: () {},
-                                  child: Row(
-                                    children: [
-                                      Text(
-                                        'Add to WishList',
-                                        style: TextStyle(color: Colors.black),
-                                      ),
-                                      Icon(
-                                        Icons.favorite_outline_outlined,
-                                        color: Colors.black,
-                                      ),
-                                    ],
-                                  ))
-                            ],
-                          ))
+                      bookBox(),
+                      bookDescription(),
+                      buttonsToCart()
                     ],
                   )),
-              Positioned(
-                top: 50,
-                left: 105,
-                child: Image.asset(
-                  books.image!,
-                  // showData[index]['image'],
-                  width: 200,
-                  height: 300,
-                  fit: BoxFit.cover,
-                ),
-              )
+              bookImage()
             ],
           ),
+        ));
+  }
+
+  Positioned bookBox() {
+    return Positioned(
+      child: Container(
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(29),
+          boxShadow: const [
+            BoxShadow(
+              offset: Offset(0, 10),
+              blurRadius: 33,
+              color: Colors.blueGrey,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Positioned bookDescription() {
+    return Positioned(
+        top: 400,
+        left: 100,
+        child: Column(
+          children: <Widget>[
+            Text(
+              books.title!,
+              style:
+                  const TextStyle(fontSize: fontM, fontWeight: FontWeight.bold),
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            Text(
+              books.author!,
+              style: const TextStyle(
+                fontSize: fontM,
+              ),
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            Text(
+              "Rs.${books.price!} ",
+              style: const TextStyle(
+                fontSize: fontM,
+              ),
+            ),
+          ],
+        ));
+  }
+
+  Positioned bookImage() {
+    return Positioned(
+      top: 50,
+      left: 105,
+      child: Image.asset(
+        books.image!,
+        // showData[index]['image'],
+        width: 200,
+        height: 300,
+        fit: BoxFit.cover,
+      ),
+    );
+  }
+
+  Positioned buttonsToCart() {
+    return Positioned(
+        bottom: 50,
+        left: 50,
+        child: Row(
+          children: <Widget>[
+            cartButton(),
+            SizedBox(
+              width: 20,
+            ),
+            wishlistButton()
+          ],
+        ));
+  }
+
+  RaisedButton cartButton() {
+    return RaisedButton(
+      onPressed: () {},
+      child: Text(
+        'Add to Cart',
+        style: const TextStyle(
+          fontSize: fontS,
+        ),
+      ),
+      color: titleColor,
+    );
+  }
+
+  TextButton wishlistButton() {
+    return TextButton(
+        onPressed: () {},
+        child: Row(
+          children: [
+            Text(
+              'Add to WishList',
+              style: TextStyle(color: black),
+            ),
+            Icon(
+              Icons.favorite_outline_outlined,
+              color: black,
+            ),
+          ],
         ));
   }
 }

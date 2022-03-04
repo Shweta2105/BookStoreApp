@@ -11,6 +11,7 @@ EdgeInsets boxMargin2() => const EdgeInsets.fromLTRB(20, 20, 20, 20);
 final titleColor = Colors.orange.withOpacity(0.8);
 final white = Colors.white;
 final transparent = Colors.transparent;
+final black = Colors.black;
 
 const fontL = 25.0;
 const fontM = 20.0;
