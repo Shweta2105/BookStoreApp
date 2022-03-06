@@ -20,6 +20,7 @@ List<Books> _books = [];
 List<Books> fliterBooks = [];
 
 class _HomeScreenState extends State<HomeScreen> {
+  List list = [];
   Future<List<Books>> getBooks() async {
     final data =
         await DefaultAssetBundle.of(context).loadString('assets/books.json');
@@ -27,6 +28,17 @@ class _HomeScreenState extends State<HomeScreen> {
     var res = response as List<dynamic>;
     List<Books> bookList = res.map((e) => Books.fromJson(e)).toList();
     return bookList;
+  }
+
+  void searchMethod(String value) {
+    return setState(() {
+      searchString = value.toLowerCase();
+
+      fliterBooks = _books
+          .where(
+              (element) => element.title!.toLowerCase().contains(searchString))
+          .toList();
+    });
   }
 
   @override
@@ -76,27 +88,29 @@ class _HomeScreenState extends State<HomeScreen> {
                         hintText: "Search your notes",
                       ),
                       onChanged: (value) {
-                        setState(() {
-                          searchString = value.toLowerCase();
-
-                          fliterBooks = _books
-                              .where((element) => element.title!
-                                  .toLowerCase()
-                                  .contains(searchString))
-                              .toList();
-                        });
-                        print(
-                            "---------------filter ----${fliterBooks}-------------");
+                        searchMethod(value);
                       },
                       controller: searchcontroller,
                     ),
                   ),
-                  IconButton(
-                      onPressed: () {
-                        Navigator.of(context).push(
-                            MaterialPageRoute(builder: (context) => Cart()));
-                      },
-                      icon: const Icon(Icons.shopping_cart_outlined)),
+                  Stack(
+                    children: <Widget>[
+                      IconButton(
+                          onPressed: () {
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) => Cart()));
+                          },
+                          icon: const Icon(Icons.shopping_cart_outlined)),
+                      list.length == 0
+                          ? Container()
+                          : Positioned(
+                              top: 2,
+                              left: 18,
+                              child: Center(
+                                child: Text(list.length.toString()),
+                              ))
+                    ],
+                  ),
                   const CustomPopMenu()
                 ],
               ),
@@ -118,82 +132,11 @@ class _HomeScreenState extends State<HomeScreen> {
           print("---------------${fliterBooks.length}--------------");
           Books book = fliterBooks.isEmpty ? _books[index] : fliterBooks[index];
           print("---------------${_books.length}--------------");
-          return BookCard(book: book);
+          print('---------------list -------${list.length}--------');
+          return BookCard(
+            book: book,
+            list: list,
+          );
         });
-  }
-}
-
-class CustomAppBar extends StatefulWidget implements PreferredSizeWidget {
-  const CustomAppBar({Key? key}) : super(key: key);
-
-  @override
-  State<CustomAppBar> createState() => _CustomAppBarState();
-
-  @override
-  Size get preferredSize => Size.fromHeight(80);
-}
-
-class _CustomAppBarState extends State<CustomAppBar> {
-  // String? searchString;
-  // TextEditingController searchcontroller = TextEditingController();
-  @override
-  Widget build(BuildContext context) {
-    return AppBar(
-      backgroundColor: Color.fromARGB(255, 128, 10, 2),
-      elevation: 1,
-      bottom: PreferredSize(
-        preferredSize: Size.fromHeight(20),
-        child: Container(
-          margin: appMargin(),
-          height: heightL,
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10),
-              color: white,
-              boxShadow: const [
-                BoxShadow(
-                  color: Colors.grey,
-                  offset: Offset(0.0, 0.0),
-                  blurRadius: 1.0,
-                )
-              ]),
-          child: Padding(
-            padding: const EdgeInsets.only(left: 5, right: 5),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                SizedBox(
-                  width: 10,
-                ),
-                Expanded(
-                  child: TextField(
-                    decoration: InputDecoration.collapsed(
-                      hintText: "Search your notes",
-                    ),
-                    onChanged: (value) {
-                      setState(() {
-                        searchString = value.toLowerCase();
-
-                        fliterBooks = _books
-                            .where((element) =>
-                                element.title!.contains(searchString))
-                            .toList();
-                      });
-                    },
-                    controller: searchcontroller,
-                  ),
-                ),
-                IconButton(
-                    onPressed: () {
-                      Navigator.of(context).push(
-                          MaterialPageRoute(builder: (context) => Cart()));
-                    },
-                    icon: const Icon(Icons.shopping_cart_outlined)),
-                const CustomPopMenu()
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
   }
 }

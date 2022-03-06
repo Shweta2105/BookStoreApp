@@ -4,20 +4,27 @@ import 'package:bookstoreapp/screens/displaydetails.dart';
 import 'package:bookstoreapp/utils/constants.dart';
 import 'package:flutter/material.dart';
 
-class BookCard extends StatelessWidget {
+class BookCard extends StatefulWidget {
+  List list;
   Books book;
   BookCard({
-    Key? key,
+    required this.list,
     required this.book,
-  }) : super(key: key);
+  });
 
+  @override
+  State<BookCard> createState() => _BookCardState();
+}
+
+class _BookCardState extends State<BookCard> {
+  bool addToBag = false;
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
         Navigator.of(context).push(MaterialPageRoute(
             builder: (context) => DisplayDetails(
-                  books: book,
+                  books: widget.book,
                 )));
       },
       child: Container(
@@ -41,7 +48,7 @@ class BookCard extends StatelessWidget {
             Positioned(
               left: 30,
               child: Image.asset(
-                book.image!,
+                widget.book.image!,
                 // showData[index]['image'],
                 width: 110,
                 height: 150,
@@ -55,18 +62,18 @@ class BookCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      book.title!,
+                      widget.book.title!,
                       style: const TextStyle(
                           fontSize: fontS, fontWeight: FontWeight.bold),
                     ),
                     Text(
-                      book.author!,
+                      widget.book.author!,
                       style: const TextStyle(
                         fontSize: fontS,
                       ),
                     ),
                     Text(
-                      "Rs.${book.price!} ",
+                      "Rs.${widget.book.price!} ",
                       style: const TextStyle(
                         fontSize: fontS,
                       ),
@@ -74,41 +81,57 @@ class BookCard extends StatelessWidget {
                   ],
                 )),
             Positioned(
-                left: 10,
-                bottom: 5,
+                left: 30,
+                bottom: 10,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    SizedBox(
-                        width: 80,
-                        height: 30,
-                        child: RaisedButton(
-                          color: titleColor,
-                          onPressed: () {
-                            Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context) => Cart(
-                                      book: book,
-                                    )));
-                          },
-                          child: Text(
-                            "ADD TO BAG",
-                            style: TextStyle(
-                              fontSize: 10,
-                            ),
-                          ),
-                        )),
-                    SizedBox(
-                        width: 80,
-                        height: 30,
-                        child: RaisedButton(
-                          onPressed: () {},
-                          child: Text(
-                            "WishList",
-                            style: TextStyle(
-                              fontSize: 10,
-                            ),
-                          ),
-                        )),
+                    addToBag == false
+                        ? SizedBox(
+                            width: 100,
+                            height: 30,
+                            child: RaisedButton(
+                              color: titleColor,
+                              onPressed: () {
+                                setState(() {
+                                  widget.list.add(1);
+                                  addToBag = !addToBag;
+                                });
+
+                                // Navigator.of(context).push(MaterialPageRoute(
+                                //     builder: (context) => Cart(
+                                //           book: widget.book,
+                                //         )));
+                              },
+                              child: Text(
+                                "ADD TO BAG",
+                                style: TextStyle(
+                                  fontSize: 10,
+                                ),
+                              ),
+                            ))
+                        : SizedBox(
+                            width: 100,
+                            height: 30,
+                            child: RaisedButton(
+                              color: titleColor,
+                              onPressed: () {
+                                setState(() {
+                                  addToBag = !addToBag;
+                                });
+
+                                Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (context) => Cart(
+                                          book: widget.book,
+                                        )));
+                              },
+                              child: Text(
+                                "GO TO BAG",
+                                style: TextStyle(
+                                  fontSize: 10,
+                                ),
+                              ),
+                            )),
                   ],
                 ))
           ],
