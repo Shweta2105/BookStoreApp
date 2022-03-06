@@ -1,4 +1,5 @@
 import 'package:bookstoreapp/model/books.dart';
+import 'package:bookstoreapp/screens/cart.dart';
 import 'package:bookstoreapp/screens/displaydetails.dart';
 import 'package:bookstoreapp/utils/constants.dart';
 import 'package:flutter/material.dart';
@@ -83,7 +84,12 @@ class BookCard extends StatelessWidget {
                         height: 30,
                         child: RaisedButton(
                           color: titleColor,
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) => Cart(
+                                      book: book,
+                                    )));
+                          },
                           child: Text(
                             "ADD TO BAG",
                             style: TextStyle(
