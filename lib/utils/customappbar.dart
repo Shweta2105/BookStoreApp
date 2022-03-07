@@ -1,10 +1,12 @@
 import 'package:bookstoreapp/screens/cart.dart';
+import 'package:bookstoreapp/screens/home.dart';
 import 'package:bookstoreapp/utils/constants.dart';
 import 'package:bookstoreapp/utils/custompopmenu.dart';
 import 'package:flutter/material.dart';
 
 class CustomAppBar extends StatefulWidget implements PreferredSizeWidget {
-  const CustomAppBar({Key? key}) : super(key: key);
+  final Function(String) onSearchChange;
+  CustomAppBar({Key? key, required this.onSearchChange}) : super(key: key);
 
   @override
   State<CustomAppBar> createState() => _CustomAppBarState();
@@ -14,8 +16,9 @@ class CustomAppBar extends StatefulWidget implements PreferredSizeWidget {
 }
 
 class _CustomAppBarState extends State<CustomAppBar> {
-  String? searchString;
+  // String? searchString;
   TextEditingController searchcontroller = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return AppBar(
@@ -51,7 +54,9 @@ class _CustomAppBarState extends State<CustomAppBar> {
                     ),
                     onChanged: (value) {
                       setState(() {
-                        searchString = value.toLowerCase();
+                        print("---------------${value}--------");
+                        widget.onSearchChange(value);
+                        //print(onSearchChange.toString());
                       });
                     },
                     controller: searchcontroller,

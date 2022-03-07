@@ -22,10 +22,11 @@ abstract class AuthProvider {
   Future<void> updateWishlist({
     required Books book,
   });
+  Future<List<Books>> getOrderList();
 
   Future<void> logOut();
 
-  Future<Books> addToOrderList(
+  Future<void> addToOrderList(
       {required String image,
       required String title,
       required String author,

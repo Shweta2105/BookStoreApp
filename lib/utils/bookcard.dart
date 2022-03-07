@@ -76,10 +76,8 @@ class _BookCardState extends State<BookCard> {
               addToBag = !addToBag;
             });
 
-            Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => Cart(
-                      book: widget.book,
-                    )));
+            Navigator.of(context)
+                .push(MaterialPageRoute(builder: (context) => Cart()));
           },
           child: Text(
             "GO TO BAG",

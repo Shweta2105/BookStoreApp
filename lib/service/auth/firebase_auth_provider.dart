@@ -119,21 +119,45 @@ class FirebaseAuthProvider implements AuthProvider {
   }
 
   @override
-  Future<Books> addToOrderList(
+  Future<void> addToOrderList(
       {required String image,
       required String title,
       required String author,
       required String price}) async {
     final user = FirebaseAuth.instance.currentUser;
 
-    final bookref = await FirebaseFirestore.instance
+    DocumentReference<Map<String, dynamic>> bookref = FirebaseFirestore.instance
         .collection('AuthUsers')
         .doc(user!.uid)
         .collection('orderList')
-        .add(
-            {'image': image, 'title': title, 'author': author, 'price': price});
+        .doc();
+    Map<String, dynamic> data = <String, dynamic>{
+      'image': image,
+      'title': title,
+      'author': author,
+      'price': price
+    };
+    bookref.set(data);
     print('------------${bookref}-------');
+  }
 
-    throw '';
+  Future<List<Books>> getOrderList() async {
+    final user = FirebaseAuth.instance.currentUser;
+    final data = await FirebaseFirestore.instance
+        .collection('AuthUsers')
+        .doc(user!.uid)
+        .collection('orderList')
+        .get();
+    List<Books> book = data.docs
+        .map(
+          (doc) => Books(
+              image: doc['image'],
+              title: doc['title'],
+              author: doc['author'],
+              price: doc['price']),
+        )
+        .toList();
+    print("===========${book.length}==========");
+    return book;
   }
 }

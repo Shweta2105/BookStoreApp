@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:bookstoreapp/model/books.dart';
+import 'package:bookstoreapp/service/auth/auth_service.dart';
 import 'package:bookstoreapp/utils/constants.dart';
 import 'package:bookstoreapp/utils/customappbar.dart';
 import 'package:flutter/material.dart';
@@ -13,14 +14,29 @@ class Cart extends StatefulWidget {
   State<Cart> createState() => _CartState();
 }
 
+var numOfItem = 1;
+
 class _CartState extends State<Cart> {
   List<Books> orderList = [];
 
-  var numOfItem = 0;
+  Future<List<Books>> orderedList() async {
+    List<Books> bookInCart = await AuthService.firebase().getOrderList();
+    orderList.addAll(bookInCart);
+    return orderList;
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    orderedList();
+  }
+
   @override
   Widget build(BuildContext context) {
+    orderedList();
     return Scaffold(
-      appBar: const CustomAppBar(),
+      // appBar: const CustomAppBar(),
       body: SingleChildScrollView(
         child: Column(
           children: <Widget>[
@@ -39,10 +55,21 @@ class _CartState extends State<Cart> {
                   SizedBox(
                     height: 20,
                   ),
-                  ListView.builder(
-                      itemCount: orderList.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        return bookInCart(orderList[index]);
+                  FutureBuilder<List<Books>>(
+                      future: orderedList(),
+                      builder: (BuildContext context,
+                          AsyncSnapshot<List<Books>> snapshot) {
+                        return ListView.builder(
+                            shrinkWrap: true,
+                            itemCount: orderList.length,
+                            itemBuilder: (BuildContext context, int index) {
+                              Books orderedBook = orderList[index];
+
+                              print("${orderedBook.title}");
+                              return BooksInCart(
+                                orderdBook: orderedBook,
+                              );
+                            });
                       }),
                   orderButton(),
                 ],
@@ -54,12 +81,36 @@ class _CartState extends State<Cart> {
     );
   }
 
-  Container bookInCart(Books book) {
+  Container orderButton() {
+    return Container(
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          FlatButton(
+              color: titleColor, onPressed: () {}, child: Text('Place Order')),
+        ],
+      ),
+    );
+  }
+}
+
+class BooksInCart extends StatefulWidget {
+  Books orderdBook;
+  BooksInCart({required this.orderdBook});
+
+  @override
+  State<BooksInCart> createState() => _BooksInCartState();
+}
+
+class _BooksInCartState extends State<BooksInCart> {
+  @override
+  Widget build(BuildContext context) {
     return Container(
         child: Row(
       children: [
         Image.asset(
-          'assets/images/book_4.jpg',
+          widget.orderdBook.image!,
+          //'assets/images/book_4.jpg',
           // showData[index]['image'],
           width: 130,
           height: 180,
@@ -67,12 +118,12 @@ class _CartState extends State<Cart> {
         ),
         SizedBox(width: 10),
         Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          Text('Book Name'),
-          Text('author'),
+          Text(widget.orderdBook.title!),
+          Text(widget.orderdBook.author!),
           SizedBox(
             height: 10,
           ),
-          Text('price'),
+          Text(widget.orderdBook.price!),
           SizedBox(
             height: 10,
           ),
@@ -81,7 +132,7 @@ class _CartState extends State<Cart> {
               IconButton(
                   color: Colors.blueGrey,
                   onPressed: () {
-                    if (numOfItem > 0) {
+                    if (numOfItem > 1) {
                       setState(() {
                         numOfItem--;
                       });
@@ -105,17 +156,5 @@ class _CartState extends State<Cart> {
         ]),
       ],
     ));
-  }
-
-  Container orderButton() {
-    return Container(
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: [
-          FlatButton(
-              color: titleColor, onPressed: () {}, child: Text('Place Order')),
-        ],
-      ),
-    );
   }
 }

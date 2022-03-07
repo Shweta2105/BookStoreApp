@@ -48,11 +48,14 @@ class AuthService implements AuthProvider {
       provider.updateWishlist(book: book);
 
   @override
-  Future<Books> addToOrderList(
+  Future<void> addToOrderList(
           {required String image,
           required String title,
           required String author,
           required String price}) =>
       provider.addToOrderList(
           image: image, title: title, author: author, price: price);
+
+  @override
+  Future<List<Books>> getOrderList() => provider.getOrderList();
 }
