@@ -117,4 +117,23 @@ class FirebaseAuthProvider implements AuthProvider {
     //     .add({'wishlist': book});
     // print("${wishlist}");
   }
+
+  @override
+  Future<Books> addToOrderList(
+      {required String image,
+      required String title,
+      required String author,
+      required String price}) async {
+    final user = FirebaseAuth.instance.currentUser;
+
+    final bookref = await FirebaseFirestore.instance
+        .collection('AuthUsers')
+        .doc(user!.uid)
+        .collection('orderList')
+        .add(
+            {'image': image, 'title': title, 'author': author, 'price': price});
+    print('------------${bookref}-------');
+
+    throw '';
+  }
 }

@@ -24,4 +24,10 @@ abstract class AuthProvider {
   });
 
   Future<void> logOut();
+
+  Future<Books> addToOrderList(
+      {required String image,
+      required String title,
+      required String author,
+      required String price});
 }
