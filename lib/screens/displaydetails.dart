@@ -1,11 +1,11 @@
-import 'package:bookstoreapp/model/books.dart';
+import 'package:bookstoreapp/providers/book.dart';
 import 'package:bookstoreapp/service/auth/auth_service.dart';
 import 'package:bookstoreapp/utils/buttons.dart';
 import 'package:bookstoreapp/utils/constants.dart';
 import 'package:flutter/material.dart';
 
 class DisplayDetails extends StatelessWidget {
-  Books books;
+  Book books;
   DisplayDetails({
     required this.books,
   });
@@ -68,7 +68,7 @@ class DisplayDetails extends StatelessWidget {
         child: Column(
           children: <Widget>[
             Text(
-              books.title!,
+              books.title,
               style:
                   const TextStyle(fontSize: fontM, fontWeight: FontWeight.bold),
             ),
@@ -76,7 +76,7 @@ class DisplayDetails extends StatelessWidget {
               height: 10,
             ),
             Text(
-              books.author!,
+              books.author,
               style: const TextStyle(
                 fontSize: fontM,
               ),
@@ -85,7 +85,7 @@ class DisplayDetails extends StatelessWidget {
               height: 10,
             ),
             Text(
-              "Rs.${books.price!} ",
+              "Rs.${books.price} ",
               style: const TextStyle(
                 fontSize: fontM,
               ),
@@ -99,7 +99,7 @@ class DisplayDetails extends StatelessWidget {
       top: 50,
       left: 105,
       child: Image.asset(
-        books.image!,
+        books.image,
         // showData[index]['image'],
         width: 200,
         height: 300,
@@ -108,7 +108,7 @@ class DisplayDetails extends StatelessWidget {
     );
   }
 
-  Positioned buttonsToCart(Books book) {
+  Positioned buttonsToCart(Book book) {
     return Positioned(
         bottom: 50,
         left: 50,

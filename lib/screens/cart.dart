@@ -1,14 +1,14 @@
 import 'dart:ui';
 
-import 'package:bookstoreapp/model/books.dart';
+import 'package:bookstoreapp/providers/book.dart';
 import 'package:bookstoreapp/service/auth/auth_service.dart';
 import 'package:bookstoreapp/utils/constants.dart';
 import 'package:bookstoreapp/utils/customappbar.dart';
 import 'package:flutter/material.dart';
 
 class Cart extends StatefulWidget {
-  Books? book;
-  Cart({Books? book});
+  Book? book;
+  Cart({Book? book});
 
   @override
   State<Cart> createState() => _CartState();
@@ -17,10 +17,10 @@ class Cart extends StatefulWidget {
 var numOfItem = 1;
 
 class _CartState extends State<Cart> {
-  List<Books> orderList = [];
+  List<Book> orderList = [];
 
-  Future<List<Books>> orderedList() async {
-    List<Books> bookInCart = await AuthService.firebase().getOrderList();
+  Future<List<Book>> orderedList() async {
+    List<Book> bookInCart = await AuthService.firebase().getOrderList();
     orderList.addAll(bookInCart);
     return orderList;
   }
@@ -55,15 +55,15 @@ class _CartState extends State<Cart> {
                   SizedBox(
                     height: 20,
                   ),
-                  FutureBuilder<List<Books>>(
+                  FutureBuilder<List<Book>>(
                       future: orderedList(),
                       builder: (BuildContext context,
-                          AsyncSnapshot<List<Books>> snapshot) {
+                          AsyncSnapshot<List<Book>> snapshot) {
                         return ListView.builder(
                             shrinkWrap: true,
                             itemCount: orderList.length,
                             itemBuilder: (BuildContext context, int index) {
-                              Books orderedBook = orderList[index];
+                              Book orderedBook = orderList[index];
 
                               print("${orderedBook.title}");
                               return BooksInCart(
@@ -95,7 +95,7 @@ class _CartState extends State<Cart> {
 }
 
 class BooksInCart extends StatefulWidget {
-  Books orderdBook;
+  Book orderdBook;
   BooksInCart({required this.orderdBook});
 
   @override
@@ -109,7 +109,7 @@ class _BooksInCartState extends State<BooksInCart> {
         child: Row(
       children: [
         Image.asset(
-          widget.orderdBook.image!,
+          widget.orderdBook.image,
           //'assets/images/book_4.jpg',
           // showData[index]['image'],
           width: 130,
@@ -118,12 +118,12 @@ class _BooksInCartState extends State<BooksInCart> {
         ),
         SizedBox(width: 10),
         Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          Text(widget.orderdBook.title!),
-          Text(widget.orderdBook.author!),
+          Text(widget.orderdBook.title),
+          Text(widget.orderdBook.author),
           SizedBox(
             height: 10,
           ),
-          Text(widget.orderdBook.price!),
+          Text(widget.orderdBook.price),
           SizedBox(
             height: 10,
           ),

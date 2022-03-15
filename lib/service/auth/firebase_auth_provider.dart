@@ -1,4 +1,4 @@
-import 'package:bookstoreapp/model/books.dart';
+import 'package:bookstoreapp/providers/book.dart';
 import 'package:bookstoreapp/service/auth/auth_user.dart';
 import 'package:bookstoreapp/service/auth/auth_provider.dart';
 import 'package:bookstoreapp/service/auth/auth_exception.dart';
@@ -18,8 +18,8 @@ class FirebaseAuthProvider implements AuthProvider {
     required String email,
     required String password,
     required String name,
-    required List<Books> wishlist,
-    required List<Books> orders,
+    required List<Book> wishlist,
+    required List<Book> orders,
   }) async {
     try {
       UserCredential data = await FirebaseAuth.instance
@@ -107,7 +107,7 @@ class FirebaseAuthProvider implements AuthProvider {
   }
 
   @override
-  Future<void> updateWishlist({Books? book}) async {
+  Future<void> updateWishlist({Book? book}) async {
     final user = FirebaseAuth.instance.currentUser;
 
     // final wishlist = await FirebaseFirestore.instance
@@ -141,20 +141,21 @@ class FirebaseAuthProvider implements AuthProvider {
     print('------------${bookref}-------');
   }
 
-  Future<List<Books>> getOrderList() async {
+  Future<List<Book>> getOrderList() async {
     final user = FirebaseAuth.instance.currentUser;
     final data = await FirebaseFirestore.instance
         .collection('AuthUsers')
         .doc(user!.uid)
         .collection('orderList')
         .get();
-    List<Books> book = data.docs
+    List<Book> book = data.docs
         .map(
-          (doc) => Books(
+          (doc) => Book(
               image: doc['image'],
               title: doc['title'],
               author: doc['author'],
-              price: doc['price']),
+              price: doc['price'],
+              id: ''),
         )
         .toList();
     print("===========${book.length}==========");

@@ -1,4 +1,4 @@
-import 'package:bookstoreapp/model/books.dart';
+import 'package:bookstoreapp/providers/book.dart';
 import 'package:bookstoreapp/service/auth/auth_user.dart';
 
 abstract class AuthProvider {
@@ -15,14 +15,14 @@ abstract class AuthProvider {
     required String email,
     required String password,
     required String name,
-    required List<Books> wishlist,
-    required List<Books> orders,
+    required List<Book> wishlist,
+    required List<Book> orders,
   });
 
   Future<void> updateWishlist({
-    required Books book,
+    required Book book,
   });
-  Future<List<Books>> getOrderList();
+  Future<List<Book>> getOrderList();
 
   Future<void> logOut();
 

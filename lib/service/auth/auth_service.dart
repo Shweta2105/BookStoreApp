@@ -1,4 +1,4 @@
-import 'package:bookstoreapp/model/books.dart';
+import 'package:bookstoreapp/providers/book.dart';
 import 'package:bookstoreapp/service/auth/auth_provider.dart';
 import 'package:bookstoreapp/service/auth/auth_user.dart';
 import 'package:bookstoreapp/service/auth/firebase_auth_provider.dart';
@@ -14,8 +14,8 @@ class AuthService implements AuthProvider {
     required String email,
     required String password,
     required String name,
-    required List<Books> wishlist,
-    required List<Books> orders,
+    required List<Book> wishlist,
+    required List<Book> orders,
   }) =>
       provider.createUser(
           email: email,
@@ -44,7 +44,7 @@ class AuthService implements AuthProvider {
   Future<void> initialize() => provider.initialize();
 
   @override
-  Future<void> updateWishlist({required Books book}) =>
+  Future<void> updateWishlist({required Book book}) =>
       provider.updateWishlist(book: book);
 
   @override
@@ -57,5 +57,5 @@ class AuthService implements AuthProvider {
           image: image, title: title, author: author, price: price);
 
   @override
-  Future<List<Books>> getOrderList() => provider.getOrderList();
+  Future<List<Book>> getOrderList() => provider.getOrderList();
 }

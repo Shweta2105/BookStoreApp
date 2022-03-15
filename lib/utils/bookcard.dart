@@ -1,4 +1,4 @@
-import 'package:bookstoreapp/model/books.dart';
+import 'package:bookstoreapp/providers/book.dart';
 import 'package:bookstoreapp/screens/cart.dart';
 import 'package:bookstoreapp/screens/displaydetails.dart';
 import 'package:bookstoreapp/service/auth/auth_service.dart';
@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 
 class BookCard extends StatefulWidget {
   List list;
-  Books book;
+  Book book;
   BookCard({
     required this.list,
     required this.book,
@@ -101,10 +101,10 @@ class _BookCardState extends State<BookCard> {
             });
 
             await AuthService.firebase().addToOrderList(
-                image: widget.book.image!,
-                title: widget.book.title!,
-                author: widget.book.author!,
-                price: widget.book.price!);
+                image: widget.book.image,
+                title: widget.book.title,
+                author: widget.book.author,
+                price: widget.book.price);
             print('-----------orderlist added');
           },
           child: Text(
@@ -124,18 +124,18 @@ class _BookCardState extends State<BookCard> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              widget.book.title!,
+              widget.book.title,
               style:
                   const TextStyle(fontSize: fontS, fontWeight: FontWeight.bold),
             ),
             Text(
-              widget.book.author!,
+              widget.book.author,
               style: const TextStyle(
                 fontSize: fontS,
               ),
             ),
             Text(
-              "Rs.${widget.book.price!} ",
+              "Rs.${widget.book.price} ",
               style: const TextStyle(
                 fontSize: fontS,
               ),
@@ -148,7 +148,7 @@ class _BookCardState extends State<BookCard> {
     return Positioned(
       left: 30,
       child: Image.asset(
-        widget.book.image!,
+        widget.book.image,
         // showData[index]['image'],
         width: 110,
         height: 150,
