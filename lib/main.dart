@@ -5,6 +5,7 @@ import 'package:bookstoreapp/screens/cartscreen.dart';
 import 'package:bookstoreapp/screens/displaydetails.dart';
 import 'package:bookstoreapp/screens/home.dart';
 import 'package:bookstoreapp/screens/login.dart';
+import 'package:bookstoreapp/screens/managescreen.dart';
 import 'package:bookstoreapp/screens/orderscreen.dart';
 import 'package:bookstoreapp/screens/signup.dart';
 import 'package:bookstoreapp/screens/welcomescreen.dart';
@@ -42,12 +43,13 @@ class MyApp extends StatelessWidget {
           theme: ThemeData(scaffoldBackgroundColor: Colors.white),
           home: WelcomeScreen(),
           routes: {
+            HomeScreen.routeName: (context) => HomeScreen(),
             DisplayDetails.routeName: (context) => DisplayDetails(),
             CartScreen.routeName: (context) => CartScreen(),
             OrderScreen.routeName: (context) => OrderScreen(),
+            ManageScreen.routeName: (context) => ManageScreen(),
             '/login': (context) => const LoginScreen(),
             '/signup': (context) => const SignupScreen(),
-            HomeScreen.routeName: (context) => HomeScreen(),
           }),
     );
   }
