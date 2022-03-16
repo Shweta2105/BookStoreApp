@@ -17,13 +17,7 @@ class Book {
       required this.price,
       this.isFavourite = false});
 
-  // factory Book.fromJson(Map<String, dynamic> json) {
-  //   return Book(
-  //     id: json['id'],
-  //     image: json['image'],
-  //     title: json['title'],
-  //     author: json['author'],
-  //     price: json['price'],
-  //   );
-  //}
+  void toggleIsFavourite() {
+    isFavourite = !isFavourite;
+  }
 }

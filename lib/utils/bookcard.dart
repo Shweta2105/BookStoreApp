@@ -23,10 +23,10 @@ class _BookCardState extends State<BookCard> {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) => DisplayDetails(
-                  books: widget.book,
-                )));
+        Navigator.of(context)
+            .pushNamed(DisplayDetails.routeName, arguments: widget.book.id);
+        print('-------------------------------------');
+        print(widget.book.id);
       },
       child: Container(
         margin: EdgeInsets.all(10),

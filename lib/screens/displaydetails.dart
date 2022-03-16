@@ -1,19 +1,28 @@
 import 'package:bookstoreapp/providers/book.dart';
+import 'package:bookstoreapp/providers/books.dart';
 import 'package:bookstoreapp/service/auth/auth_service.dart';
 import 'package:bookstoreapp/utils/buttons.dart';
 import 'package:bookstoreapp/utils/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class DisplayDetails extends StatelessWidget {
-  Book books;
-  DisplayDetails({
-    required this.books,
-  });
+  static const String routeName = '/display_details';
+  var loadedBook = Book(id: '', image: '', title: '', author: '', price: '');
 
   @override
   Widget build(BuildContext context) {
+    final bookId = ModalRoute.of(context)?.settings.arguments;
+    if (bookId != null) {
+      var book = bookId as String;
+      loadedBook = Provider.of<Books>(context, listen: false).findById(book);
+      print('-------------------------------------');
+      print(loadedBook);
+    }
+
     return Scaffold(
         appBar: AppBar(
+          title: Text(loadedBook.title),
           automaticallyImplyLeading: false,
           backgroundColor: white,
           leading: IconButton(
@@ -33,13 +42,46 @@ class DisplayDetails extends StatelessWidget {
                   child: Stack(
                     children: <Widget>[
                       bookBox(),
-                      bookDescription(),
-                      buttonsToCart(books)
+                      bookDescription(loadedBook),
+                      buttonsToCart(loadedBook)
                     ],
                   )),
-              bookImage()
+              bookImage(loadedBook)
             ],
           ),
+        ));
+  }
+
+  Positioned bookDescription(Book loadedBook) {
+    return Positioned(
+        top: 400,
+        left: 100,
+        child: Column(
+          children: <Widget>[
+            Text(
+              loadedBook.title,
+              style:
+                  const TextStyle(fontSize: fontM, fontWeight: FontWeight.bold),
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            Text(
+              loadedBook.author,
+              style: const TextStyle(
+                fontSize: fontM,
+              ),
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            Text(
+              "Rs.${loadedBook.price} ",
+              style: const TextStyle(
+                fontSize: fontM,
+              ),
+            ),
+          ],
         ));
   }
 
@@ -61,45 +103,12 @@ class DisplayDetails extends StatelessWidget {
     );
   }
 
-  Positioned bookDescription() {
-    return Positioned(
-        top: 400,
-        left: 100,
-        child: Column(
-          children: <Widget>[
-            Text(
-              books.title,
-              style:
-                  const TextStyle(fontSize: fontM, fontWeight: FontWeight.bold),
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            Text(
-              books.author,
-              style: const TextStyle(
-                fontSize: fontM,
-              ),
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            Text(
-              "Rs.${books.price} ",
-              style: const TextStyle(
-                fontSize: fontM,
-              ),
-            ),
-          ],
-        ));
-  }
-
-  Positioned bookImage() {
+  Positioned bookImage(Book loadedBook) {
     return Positioned(
       top: 50,
       left: 105,
       child: Image.asset(
-        books.image,
+        loadedBook.image,
         // showData[index]['image'],
         width: 200,
         height: 300,

@@ -1,4 +1,5 @@
 import 'package:bookstoreapp/providers/books.dart';
+import 'package:bookstoreapp/screens/displaydetails.dart';
 import 'package:bookstoreapp/screens/home.dart';
 import 'package:bookstoreapp/screens/login.dart';
 import 'package:bookstoreapp/screens/signup.dart';
@@ -29,6 +30,7 @@ class MyApp extends StatelessWidget {
           theme: ThemeData(scaffoldBackgroundColor: Colors.white),
           home: WelcomeScreen(),
           routes: {
+            DisplayDetails.routeName: (context) => DisplayDetails(),
             '/login': (context) => const LoginScreen(),
             '/signup': (context) => const SignupScreen(),
             '/home': (context) => HomeScreen(),
