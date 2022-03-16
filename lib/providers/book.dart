@@ -6,7 +6,7 @@ class Book {
   final String image;
   final String title;
   final String author;
-  final String price;
+  final double price;
   bool isFavourite;
 
   Book(

@@ -1,8 +1,11 @@
-import 'package:bookstoreapp/screens/cart.dart';
+import 'package:bookstoreapp/screens/cartscreen.dart';
 import 'package:bookstoreapp/screens/home.dart';
+import 'package:bookstoreapp/utils/badge.dart';
 import 'package:bookstoreapp/utils/constants.dart';
+import 'package:bookstoreapp/providers/cart.dart';
 import 'package:bookstoreapp/utils/custompopmenu.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class CustomAppBar extends StatefulWidget implements PreferredSizeWidget {
   final Function(String) onSearchChange;
@@ -62,12 +65,22 @@ class _CustomAppBarState extends State<CustomAppBar> {
                     controller: searchcontroller,
                   ),
                 ),
-                IconButton(
+                Consumer<Cart>(
+                  builder: (_, cart, ch) => Badge(
+                    child: ch!,
+                    value: cart.itemCount.toString(),
+                    //cart.itemCount,
+                    color: Theme.of(context).accentColor,
+                  ),
+                  child: IconButton(
+                    icon: Icon(
+                      Icons.shopping_cart,
+                    ),
                     onPressed: () {
-                      Navigator.of(context).push(
-                          MaterialPageRoute(builder: (context) => Cart()));
+                      Navigator.of(context).pushNamed(CartScreen.routeName);
                     },
-                    icon: const Icon(Icons.shopping_cart_outlined)),
+                  ),
+                ),
                 const CustomPopMenu()
               ],
             ),

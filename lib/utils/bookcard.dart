@@ -1,9 +1,11 @@
 import 'package:bookstoreapp/providers/book.dart';
-import 'package:bookstoreapp/screens/cart.dart';
+import 'package:bookstoreapp/providers/cart.dart';
+import 'package:bookstoreapp/screens/cartscreen.dart';
 import 'package:bookstoreapp/screens/displaydetails.dart';
 import 'package:bookstoreapp/service/auth/auth_service.dart';
 import 'package:bookstoreapp/utils/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class BookCard extends StatefulWidget {
   List list;
@@ -19,8 +21,10 @@ class BookCard extends StatefulWidget {
 
 class _BookCardState extends State<BookCard> {
   bool addToBag = false;
+
   @override
   Widget build(BuildContext context) {
+    final cart = Provider.of<Cart>(context);
     return InkWell(
       onTap: () {
         Navigator.of(context)
@@ -55,7 +59,7 @@ class _BookCardState extends State<BookCard> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     addToBag == false
-                        ? addToBagButton()
+                        ? addToBagButton(cart)
                         : goToBagButton(context),
                   ],
                 ))
@@ -77,7 +81,7 @@ class _BookCardState extends State<BookCard> {
             });
 
             Navigator.of(context)
-                .push(MaterialPageRoute(builder: (context) => Cart()));
+                .push(MaterialPageRoute(builder: (context) => CartScreen()));
           },
           child: Text(
             "GO TO BAG",
@@ -88,24 +92,14 @@ class _BookCardState extends State<BookCard> {
         ));
   }
 
-  SizedBox addToBagButton() {
+  SizedBox addToBagButton(Cart cart) {
     return SizedBox(
         width: 100,
         height: 30,
         child: RaisedButton(
           color: titleColor,
           onPressed: () async {
-            setState(() {
-              widget.list.add(1);
-              addToBag = !addToBag;
-            });
-
-            await AuthService.firebase().addToOrderList(
-                image: widget.book.image,
-                title: widget.book.title,
-                author: widget.book.author,
-                price: widget.book.price);
-            print('-----------orderlist added');
+            cart.addItem(widget.book.id, widget.book.price, widget.book.title);
           },
           child: Text(
             "ADD TO BAG",

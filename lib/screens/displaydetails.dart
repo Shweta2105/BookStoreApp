@@ -8,7 +8,7 @@ import 'package:provider/provider.dart';
 
 class DisplayDetails extends StatelessWidget {
   static const String routeName = '/display_details';
-  var loadedBook = Book(id: '', image: '', title: '', author: '', price: '');
+  var loadedBook = Book(id: '', image: '', title: '', author: '', price: 0);
 
   @override
   Widget build(BuildContext context) {
