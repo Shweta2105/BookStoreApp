@@ -100,6 +100,19 @@ class _BookCardState extends State<BookCard> {
           color: titleColor,
           onPressed: () async {
             cart.addItem(widget.book.id, widget.book.price, widget.book.title);
+            Scaffold.of(context).hideCurrentSnackBar();
+            Scaffold.of(context).showSnackBar(SnackBar(
+              content: Text(
+                'Added to Cart..!!',
+                textAlign: TextAlign.center,
+              ),
+              duration: Duration(seconds: 2),
+              action: SnackBarAction(
+                  label: 'UNDO',
+                  onPressed: () {
+                    cart.removeSingleItem(widget.book.id);
+                  }),
+            ));
           },
           child: Text(
             "ADD TO BAG",
