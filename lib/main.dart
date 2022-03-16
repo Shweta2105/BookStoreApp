@@ -1,9 +1,11 @@
 import 'package:bookstoreapp/providers/books.dart';
 import 'package:bookstoreapp/providers/cart.dart';
+import 'package:bookstoreapp/providers/orders.dart';
 import 'package:bookstoreapp/screens/cartscreen.dart';
 import 'package:bookstoreapp/screens/displaydetails.dart';
 import 'package:bookstoreapp/screens/home.dart';
 import 'package:bookstoreapp/screens/login.dart';
+import 'package:bookstoreapp/screens/orderscreen.dart';
 import 'package:bookstoreapp/screens/signup.dart';
 import 'package:bookstoreapp/screens/welcomescreen.dart';
 
@@ -32,6 +34,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider.value(
           value: Cart(),
         ),
+        ChangeNotifierProvider.value(value: Orders())
       ],
       child: MaterialApp(
           title: 'Book Store App',
@@ -41,9 +44,10 @@ class MyApp extends StatelessWidget {
           routes: {
             DisplayDetails.routeName: (context) => DisplayDetails(),
             CartScreen.routeName: (context) => CartScreen(),
+            OrderScreen.routeName: (context) => OrderScreen(),
             '/login': (context) => const LoginScreen(),
             '/signup': (context) => const SignupScreen(),
-            '/home': (context) => HomeScreen(),
+            HomeScreen.routeName: (context) => HomeScreen(),
           }),
     );
   }
