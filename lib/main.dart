@@ -3,6 +3,7 @@ import 'package:bookstoreapp/providers/cart.dart';
 import 'package:bookstoreapp/providers/orders.dart';
 import 'package:bookstoreapp/screens/cartscreen.dart';
 import 'package:bookstoreapp/screens/displaydetails.dart';
+import 'package:bookstoreapp/screens/editbookscreen.dart';
 import 'package:bookstoreapp/screens/home.dart';
 import 'package:bookstoreapp/screens/login.dart';
 import 'package:bookstoreapp/screens/managescreen.dart';
@@ -48,6 +49,7 @@ class MyApp extends StatelessWidget {
             CartScreen.routeName: (context) => CartScreen(),
             OrderScreen.routeName: (context) => OrderScreen(),
             ManageScreen.routeName: (context) => ManageScreen(),
+            EditBookScreen.routeName: (context) => EditBookScreen(),
             '/login': (context) => const LoginScreen(),
             '/signup': (context) => const SignupScreen(),
           }),

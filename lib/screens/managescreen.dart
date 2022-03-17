@@ -1,4 +1,5 @@
 import 'package:bookstoreapp/providers/books.dart';
+import 'package:bookstoreapp/screens/editbookscreen.dart';
 import 'package:bookstoreapp/utils/manageitem.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -19,7 +20,9 @@ class ManageScreen extends StatelessWidget {
             icon: Icon(
               Icons.add,
             ),
-            onPressed: () {},
+            onPressed: () {
+              Navigator.of(context).pushNamed(EditBookScreen.routeName);
+            },
           )
         ],
       ),
@@ -30,7 +33,8 @@ class ManageScreen extends StatelessWidget {
             itemCount: bookData.item.length,
             itemBuilder: (_, i) => Column(
                   children: [
-                    ManageItem(bookData.item[i].title, bookData.item[i].image),
+                    ManageItem(bookData.item[i].id, bookData.item[i].title,
+                        bookData.item[i].image),
                     Divider(),
                   ],
                 )),

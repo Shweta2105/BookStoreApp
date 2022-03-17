@@ -1,10 +1,13 @@
+import 'package:bookstoreapp/providers/books.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class ManageItem extends StatelessWidget {
+  final String id;
   final String title;
   final String image;
 
-  ManageItem(this.title, this.image);
+  ManageItem(this.id, this.title, this.image);
 
   @override
   Widget build(BuildContext context) {
@@ -12,7 +15,7 @@ class ManageItem extends StatelessWidget {
       title: Text(title),
       leading: CircleAvatar(
         radius: 25,
-        backgroundImage: AssetImage(image),
+        backgroundImage: NetworkImage(image),
       ),
       trailing: Container(
         width: 100,
@@ -25,7 +28,9 @@ class ManageItem extends StatelessWidget {
                   color: Theme.of(context).primaryColor,
                 )),
             IconButton(
-                onPressed: () {},
+                onPressed: () {
+                  Provider.of<Books>(context, listen: false).deleteBook(id);
+                },
                 icon: Icon(
                   Icons.delete,
                   color: Theme.of(context).errorColor,

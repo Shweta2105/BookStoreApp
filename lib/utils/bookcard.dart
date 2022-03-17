@@ -154,8 +154,9 @@ class _BookCardState extends State<BookCard> {
   Positioned displayBook() {
     return Positioned(
       left: 30,
-      child: Image.asset(
+      child: Image.network(
         widget.book.image,
+
         // showData[index]['image'],
         width: 110,
         height: 150,

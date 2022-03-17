@@ -107,7 +107,7 @@ class DisplayDetails extends StatelessWidget {
     return Positioned(
       top: 50,
       left: 105,
-      child: Image.asset(
+      child: Image.network(
         loadedBook.image,
         // showData[index]['image'],
         width: 200,
