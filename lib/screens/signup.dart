@@ -1,5 +1,3 @@
-import 'package:bookstoreapp/service/auth/auth_exception.dart';
-import 'package:bookstoreapp/service/auth/auth_service.dart';
 import 'package:bookstoreapp/utils/constants.dart';
 import 'package:bookstoreapp/utils/userentrytextfield.dart';
 import 'package:flutter/material.dart';
@@ -61,18 +59,6 @@ class _SignupScreenState extends State<SignupScreen> {
                 padding: boxMargin(),
                 child: UserEntryTextField(
                   obscureText: false,
-                  controller: nameEditingController,
-                  labelText: 'Name',
-                ),
-              ),
-              SizedBox(
-                height: heightM,
-              ),
-              Container(
-                height: heightXl,
-                padding: boxMargin(),
-                child: UserEntryTextField(
-                  obscureText: false,
                   controller: emailEditingController,
                   labelText: 'Email',
                 ),
@@ -93,6 +79,18 @@ class _SignupScreenState extends State<SignupScreen> {
                 height: heightM,
               ),
               Container(
+                height: heightXl,
+                padding: boxMargin(),
+                child: UserEntryTextField(
+                  obscureText: true,
+                  controller: passwordEditingController,
+                  labelText: 'Confirm Password',
+                ),
+              ),
+              SizedBox(
+                height: heightM,
+              ),
+              Container(
                 height: heightL,
                 padding: boxMargin(),
                 child: RaisedButton(
@@ -102,20 +100,7 @@ class _SignupScreenState extends State<SignupScreen> {
                         style: TextStyle(
                           fontSize: fontM,
                         )),
-                    onPressed: () async {
-                      try {
-                        await signup(context);
-                      } on WeakPasswordAuthException catch (e) {
-                        showErrorDialog(context, 'Weak Password');
-                      } on EmailAlreadyInUseAuthException catch (e) {
-                        showErrorDialog(
-                            context, 'This Email is Already in use. ');
-                      } on InvalidEmailAuthException catch (e) {
-                        showErrorDialog(context, 'Invalid Email Id');
-                      } on GenericAuthException catch (e) {
-                        showErrorDialog(context, 'Failed to register');
-                      }
-                    }
+                    onPressed: () async {}
                     //loginUser
                     ),
               ),
@@ -129,22 +114,22 @@ class _SignupScreenState extends State<SignupScreen> {
               SizedBox(
                 height: heightM,
               ),
-              Container(
-                height: heightL,
-                padding: boxMargin(),
-                child: FlatButton(
-                    textColor: titleColor,
-                    color: transparent,
-                    child: const Text('Sign Up with Google',
-                        style: TextStyle(
-                          fontSize: fontM,
-                        )),
-                    onPressed: () {
-                      Navigator.pushNamed(context, '/signup');
-                    }
-                    //loginUser
-                    ),
-              ),
+              // Container(
+              //   height: heightL,
+              //   padding: boxMargin(),
+              //   child: FlatButton(
+              //       textColor: titleColor,
+              //       color: transparent,
+              //       child: const Text('Sign Up with Google',
+              //           style: TextStyle(
+              //             fontSize: fontM,
+              //           )),
+              //       onPressed: () {
+              //         Navigator.pushNamed(context, '/signup');
+              //       }
+              //       //loginUser
+              //       ),
+              // ),
             ],
           ),
         ),
@@ -153,14 +138,6 @@ class _SignupScreenState extends State<SignupScreen> {
   }
 
   Future<void> signup(BuildContext context) async {
-    final user = await AuthService.firebase().createUser(
-      email: emailEditingController.text,
-      password: passwordEditingController.text,
-      name: nameEditingController.text,
-      wishlist: [],
-      orders: [],
-    );
-
     Navigator.pushNamed(context, '/login');
   }
 }

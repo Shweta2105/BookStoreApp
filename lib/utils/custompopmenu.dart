@@ -1,6 +1,6 @@
 import 'package:bookstoreapp/screens/myorders.dart';
 import 'package:bookstoreapp/screens/wishlist.dart';
-import 'package:bookstoreapp/service/auth/auth_service.dart';
+
 import 'package:bookstoreapp/utils/constants.dart';
 import 'package:flutter/material.dart';
 
@@ -20,7 +20,7 @@ class CustomPopMenu extends StatelessWidget {
             case MenuAction.logout:
               final shouldLogOut = await showLogOutDialog(context);
               if (shouldLogOut) {
-                await AuthService.firebase().logOut();
+                //await AuthService.firebase().logOut();
 
                 Navigator.pushNamed(context, '/login');
               }

@@ -4,7 +4,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class Books with ChangeNotifier {
-  final List<Book> _item = [
+  List<Book> _item = [
     // Book(
     //   id: "1",
     //   image: "assets/images/book_18.jpg",
@@ -102,31 +102,58 @@ class Books with ChangeNotifier {
     return _item.firstWhere((book) => book.id == id);
   }
 
+  Future<void> fetchBooks() async {
+    var url =
+        'https://bookstoreapp-1-default-rtdb.asia-southeast1.firebasedatabase.app/bookstore.json';
+    try {
+      final response = await http.get(Uri.parse(url));
+      final extractedData = json.decode(response.body) as Map<String, dynamic>;
+      final List<Book> loadedProducts = [];
+      extractedData.forEach((prodId, prodData) {
+        loadedProducts.add(Book(
+            id: prodId,
+            title: prodData['title'],
+            author: prodData['author'],
+            price: prodData['price'],
+            isFavourite: prodData['isFavourite'],
+            image: prodData['image']));
+      });
+      _item = loadedProducts;
+      print(_item);
+      notifyListeners();
+    } catch (e) {
+      throw (e);
+    }
+  }
+
   Future<void> addBook(Book book) async {
     var url =
         'https://bookstoreapp-1-default-rtdb.asia-southeast1.firebasedatabase.app/bookstore.json';
-    await http
-        .post(
-      (Uri.parse(url)),
-      body: json.encode({
-        'title': book.title,
-        'author': book.author,
-        'price': book.price,
-        'image': book.image,
-      }),
-    )
-        .then((response) {
+    try {
+      final response = await http.post(
+        (Uri.parse(url)),
+        body: json.encode({
+          'title': book.title,
+          'author': book.author,
+          'image': book.image,
+          'price': book.price,
+        }),
+      );
+
       print(json.decode(response.body));
-    });
-    final newBook = Book(
-      id: DateTime.now().toString(),
-      title: book.title,
-      author: book.author,
-      price: book.price,
-      image: book.image,
-    );
-    _item.add(newBook);
-    notifyListeners();
+      final newProduct = Book(
+        id: json.decode(response.body)['name'],
+        title: book.title,
+        author: book.author,
+        price: book.price,
+        image: book.image,
+      );
+      _item.add(newProduct);
+      notifyListeners();
+    } catch (onError) {
+      print(onError);
+      throw onError;
+    }
   }
 
   void updateBook(String id, Book newBook) {

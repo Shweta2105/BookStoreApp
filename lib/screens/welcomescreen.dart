@@ -1,5 +1,4 @@
 import 'package:bookstoreapp/screens/login.dart';
-import 'package:bookstoreapp/service/auth/auth_service.dart';
 import 'package:flutter/material.dart';
 
 class WelcomeScreen extends StatefulWidget {
@@ -16,7 +15,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
       height: double.infinity,
       decoration: BoxDecoration(
           image: DecorationImage(
-              image: AssetImage('assets/images/book3.jpg'),
+              image: const AssetImage('assets/images/book3.jpg'),
               fit: BoxFit.cover,
               colorFilter: ColorFilter.mode(
                   Colors.black.withOpacity(0.5), BlendMode.dstATop))),
@@ -31,21 +30,21 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                 color: Colors.white,
                 decoration: TextDecoration.none),
           ),
-          SizedBox(
+          const SizedBox(
             height: 10,
           ),
           RaisedButton(
             color: Colors.transparent,
             onPressed: () {
               //Navigator.pushNamed(context, '/home');
-              final user = AuthService.firebase().currentUser;
-              if (user != null) {
-                Navigator.pushNamed(context, '/home');
-              } else {
-                Navigator.pushNamed(context, '/login');
-              }
+              // final user = AuthService.firebase().currentUser;
+              // if (user != null) {
+              Navigator.pushNamed(context, '/home');
+              //} else {
+              //  Navigator.pushNamed(context, '/login');
+              //}
             },
-            child: Text(
+            child: const Text(
               "Lets get started with reading....",
               style: TextStyle(
                   fontSize: 15,

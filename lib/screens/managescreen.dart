@@ -33,8 +33,8 @@ class ManageScreen extends StatelessWidget {
             itemCount: bookData.item.length,
             itemBuilder: (_, i) => Column(
                   children: [
-                    ManageItem(bookData.item[i].id, bookData.item[i].title,
-                        bookData.item[i].image),
+                    ManageItem(bookData.item[i].id!, bookData.item[i].title!,
+                        bookData.item[i].image!),
                     Divider(),
                   ],
                 )),

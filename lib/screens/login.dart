@@ -1,5 +1,3 @@
-import 'package:bookstoreapp/service/auth/auth_exception.dart';
-import 'package:bookstoreapp/service/auth/auth_service.dart';
 import 'package:bookstoreapp/utils/constants.dart';
 import 'package:bookstoreapp/utils/userentrytextfield.dart';
 import 'package:flutter/material.dart';
@@ -100,26 +98,8 @@ class _LoginScreenState extends State<LoginScreen> {
                         style: TextStyle(
                           fontSize: fontM,
                         )),
-                    onPressed: () async {
-                      try {
-                        await AuthService.firebase().logIn(
-                          email: emailEditingController.text,
-                          password: passwordEditingController.text,
-                        );
-                        final user = AuthService.firebase().currentUser;
-                        if (user != null) {
-                          Navigator.of(context)
-                              .pushNamed('/home', arguments: (_) => false);
-                        }
-                      } on UserNotFoundException catch (e) {
-                        showErrorDialog(context, 'User not found');
-                      } on WrongPasswordAuthException catch (e) {
-                        showErrorDialog(context, 'Wrong Password');
-                      } on GenericAuthException catch (e) {
-                        showErrorDialog(
-                            context, 'failed to search user.. try again');
-                      }
-                    }
+                    onPressed: () async {}
+
                     //loginUser
                     ),
               ),

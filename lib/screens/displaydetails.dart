@@ -1,6 +1,5 @@
 import 'package:bookstoreapp/providers/book.dart';
 import 'package:bookstoreapp/providers/books.dart';
-import 'package:bookstoreapp/service/auth/auth_service.dart';
 import 'package:bookstoreapp/utils/buttons.dart';
 import 'package:bookstoreapp/utils/constants.dart';
 import 'package:flutter/material.dart';
@@ -22,7 +21,7 @@ class DisplayDetails extends StatelessWidget {
 
     return Scaffold(
         appBar: AppBar(
-          title: Text(loadedBook.title),
+          title: Text(loadedBook.title!),
           automaticallyImplyLeading: false,
           backgroundColor: white,
           leading: IconButton(
@@ -59,7 +58,7 @@ class DisplayDetails extends StatelessWidget {
         child: Column(
           children: <Widget>[
             Text(
-              loadedBook.title,
+              loadedBook.title!,
               style:
                   const TextStyle(fontSize: fontM, fontWeight: FontWeight.bold),
             ),
@@ -67,7 +66,7 @@ class DisplayDetails extends StatelessWidget {
               height: 10,
             ),
             Text(
-              loadedBook.author,
+              loadedBook.author!,
               style: const TextStyle(
                 fontSize: fontM,
               ),
@@ -108,7 +107,7 @@ class DisplayDetails extends StatelessWidget {
       top: 50,
       left: 105,
       child: Image.network(
-        loadedBook.image,
+        loadedBook.image!,
         // showData[index]['image'],
         width: 200,
         height: 300,

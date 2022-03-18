@@ -1,9 +1,47 @@
-class AuthUsers {
-  String? uid;
-  String? name;
-  String? email;
-  List? wishlist;
-  List? myOrders;
+import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
-  AuthUsers({this.uid, this.name, this.email, this.wishlist, this.myOrders});
+class Auth with ChangeNotifier {
+  String _token = '';
+  DateTime? _expiryDate;
+  String _userId = '';
+  Future<void> _authenticate(
+      String? email, String? password, String urlSegment) async {
+    final url =
+        'https://identitytoolkit.googleapis.com/v1/accounts:$urlSegment?key=AIzaSyDE5FzbiVAPPzJtP_ZmvJ5IBnYhJTDYBOY';
+    final response = await http.post(Uri.parse(url),
+        body: json.encode({
+          'email': email,
+          'password': password,
+          'returnSecureToken': true,
+        }));
+    print(json.decode(response.body));
+  }
+
+  Future<void> signup(String? email, String? password) async {
+    return _authenticate(email, password, 'signUp');
+    // const url =
+    //     'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyDSp_Xwy55w2_bjWwdu5DXGVR10UolI48A';
+    // final response = await http.post(Uri.parse(url),
+    //     body: json.encode({
+    //       'email': email,
+    //       'password': password,
+    //       'returnSecureToken': true,
+    //     }));
+    // print(json.decode(response.body));
+  }
+
+  Future<void> login(String? email, String? password) async {
+    return _authenticate(email, password, 'signInWithPassword');
+    // const url =
+    //     'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyDSp_Xwy55w2_bjWwdu5DXGVR10UolI48A';
+    // final response = await http.post(Uri.parse(url),
+    //     body: json.encode({
+    //       'email': email,
+    //       'password': password,
+    //       'returnSecureToken': true,
+    //     }));
+    // print(json.decode(response.body));
+  }
 }

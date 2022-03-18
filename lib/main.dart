@@ -11,15 +11,11 @@ import 'package:bookstoreapp/screens/orderscreen.dart';
 import 'package:bookstoreapp/screens/signup.dart';
 import 'package:bookstoreapp/screens/welcomescreen.dart';
 
-import 'package:bookstoreapp/service/auth/auth_service.dart';
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
-  await AuthService.firebase().initialize();
 
   runApp(const MyApp());
 }

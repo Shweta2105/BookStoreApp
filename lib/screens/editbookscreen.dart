@@ -44,13 +44,13 @@ class _EditBookScreenState extends State<EditBookScreen> {
             Provider.of<Books>(context, listen: false).findById(prodId);
 
         _initValues = {
-          'title': _editedProduct.title,
-          'author': _editedProduct.author,
+          'title': _editedProduct.title!,
+          'author': _editedProduct.author!,
           'price': _editedProduct.price.toString(),
           'image': '',
         };
 
-        _imageController.text = _editedProduct.image;
+        _imageController.text = _editedProduct.image!;
       }
     }
 
@@ -75,9 +75,9 @@ class _EditBookScreenState extends State<EditBookScreen> {
     }
   }
 
-  void _saveForm() {
-    final isValid = _form.currentState?.validate();
-    if (!isValid!) {
+  Future<void> _saveForm() async {
+    final isValid = _form.currentState!.validate();
+    if (!isValid) {
       return;
     }
     _form.currentState!.save();
@@ -86,34 +86,33 @@ class _EditBookScreenState extends State<EditBookScreen> {
     });
     if (_editedProduct.id != '') {
       Provider.of<Books>(context, listen: false)
-          .updateBook(_editedProduct.id, _editedProduct);
+          .updateBook(_editedProduct.id!, _editedProduct);
       setState(() {
         isLoading = false;
       });
       Navigator.of(context).pop();
     } else {
-      Provider.of<Books>(context, listen: false)
+      await Provider.of<Books>(context, listen: false)
           .addBook(_editedProduct)
-          .catchError((error) {
+          .catchError((e) {
         return showDialog<Null>(
             context: context,
             builder: (c) => AlertDialog(
-                  title: Text("An error occured.!"),
-                  content: Text("Something went wrong..!"),
+                  title: const Text("An error occured.!"),
+                  content: const Text("Something went wrong..!"),
                   actions: <Widget>[
                     FlatButton(
                         onPressed: () {
                           Navigator.of(c).pop();
                         },
-                        child: Text('OK'))
+                        child: const Text('OK'))
                   ],
                 ));
       }).then((_) {
-        Navigator.of(context).pop;
-
         setState(() {
           isLoading = false;
         });
+        Navigator.of(context).pop();
       });
     }
   }
@@ -131,137 +130,143 @@ class _EditBookScreenState extends State<EditBookScreen> {
               icon: Icon(Icons.save))
         ],
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(15.0),
-        child: Form(
-            key: _form,
-            child: ListView(
-              children: <Widget>[
-                TextFormField(
-                  decoration: InputDecoration(labelText: 'Title'),
-                  textInputAction: TextInputAction.next,
-                  onFieldSubmitted: (_) {
-                    FocusScope.of(context).requestFocus(_priceFocusNode);
-                  },
-                  validator: (value) {
-                    if (value!.isEmpty) {
-                      return 'Please provide value';
-                    }
-                    return null;
-                  },
-                  onSaved: (value) {
-                    _editedProduct = Book(
-                        id: '',
-                        title: value!,
-                        author: _editedProduct.author,
-                        price: _editedProduct.price,
-                        image: _editedProduct.image);
-                  },
-                ),
-                TextFormField(
-                  decoration: InputDecoration(labelText: 'Author'),
-                  textInputAction: TextInputAction.next,
-                  onFieldSubmitted: (_) {
-                    FocusScope.of(context).requestFocus(_priceFocusNode);
-                  },
-                  validator: (value) {
-                    if (value!.isEmpty) {
-                      return 'Please provide value';
-                    }
-                    return null;
-                  },
-                  onSaved: (value) {
-                    _editedProduct = Book(
-                        id: '',
-                        title: _editedProduct.title,
-                        author: value!,
-                        price: _editedProduct.price,
-                        image: _editedProduct.image);
-                  },
-                ),
-                TextFormField(
-                  decoration: InputDecoration(labelText: 'Price'),
-                  textInputAction: TextInputAction.next,
-                  keyboardType: TextInputType.number,
-                  focusNode: _priceFocusNode,
-                  onFieldSubmitted: (_) {
-                    FocusScope.of(context).requestFocus(_descriptionFocusNode);
-                  },
-                  validator: (value) {
-                    if (value!.isEmpty) {
-                      return 'Please enter a price.';
-                    }
-                    if (double.tryParse(value) == null) {
-                      return 'Please enter valid number.';
-                    }
-                    if (double.parse(value) <= 0) {
-                      return 'Please enter a number greater then zero.';
-                    }
-                    return null;
-                  },
-                  onSaved: (value) {
-                    _editedProduct = Book(
-                        id: '',
-                        title: _editedProduct.title,
-                        author: _editedProduct.author,
-                        price: double.parse(value!),
-                        image: _editedProduct.image);
-                  },
-                ),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: <Widget>[
-                    Container(
-                      width: 100,
-                      height: 100,
-                      margin: EdgeInsets.only(top: 10, right: 10),
-                      decoration: BoxDecoration(
-                          border: Border.all(width: 1, color: Colors.grey)),
-                      child: _imageController.text.isEmpty
-                          ? Text('add image URL')
-                          : FittedBox(
-                              child: Image.network(
-                                _imageController.text,
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                    ),
-                    Expanded(
-                        child: TextFormField(
-                      decoration: InputDecoration(labelText: 'Image Url'),
-                      keyboardType: TextInputType.url,
-                      textInputAction: TextInputAction.done,
-                      controller: _imageController,
-                      focusNode: _imageFocusNode,
-                      validator: (value) {
-                        if (value!.isEmpty) {
-                          return 'Please enter an image URL';
-                        }
-                        if (!value.startsWith('http') &&
-                            !value.startsWith('https')) {
-                          return 'Please entera valid URL';
-                        }
-                        if (!value.endsWith('.png') &&
-                            !value.endsWith('.jpg') &&
-                            !value.endsWith('.jpeg')) {
-                          return 'Please enter valid image URL';
-                        }
-                        return null;
-                      },
-                      onSaved: (value) {
-                        _editedProduct = Book(
-                            id: '',
-                            title: _editedProduct.title,
-                            author: _editedProduct.author,
-                            price: _editedProduct.price,
-                            image: value!);
-                      },
-                    ))
-                  ],
-                )
-              ],
-            )),
-      ),
+      body: isLoading
+          ? Center(
+              child: CircularProgressIndicator(),
+            )
+          : Padding(
+              padding: const EdgeInsets.all(15.0),
+              child: Form(
+                  key: _form,
+                  child: ListView(
+                    children: <Widget>[
+                      TextFormField(
+                        decoration: InputDecoration(labelText: 'Title'),
+                        textInputAction: TextInputAction.next,
+                        onFieldSubmitted: (_) {
+                          FocusScope.of(context).requestFocus(_priceFocusNode);
+                        },
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return 'Please provide value';
+                          }
+                          return null;
+                        },
+                        onSaved: (value) {
+                          _editedProduct = Book(
+                              id: '',
+                              title: value!,
+                              author: _editedProduct.author,
+                              price: _editedProduct.price,
+                              image: _editedProduct.image);
+                        },
+                      ),
+                      TextFormField(
+                        decoration: InputDecoration(labelText: 'Author'),
+                        textInputAction: TextInputAction.next,
+                        onFieldSubmitted: (_) {
+                          FocusScope.of(context).requestFocus(_priceFocusNode);
+                        },
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return 'Please provide value';
+                          }
+                          return null;
+                        },
+                        onSaved: (value) {
+                          _editedProduct = Book(
+                              id: '',
+                              title: _editedProduct.title,
+                              author: value!,
+                              price: _editedProduct.price,
+                              image: _editedProduct.image);
+                        },
+                      ),
+                      TextFormField(
+                        decoration: InputDecoration(labelText: 'Price'),
+                        textInputAction: TextInputAction.next,
+                        keyboardType: TextInputType.number,
+                        focusNode: _priceFocusNode,
+                        onFieldSubmitted: (_) {
+                          FocusScope.of(context)
+                              .requestFocus(_descriptionFocusNode);
+                        },
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return 'Please enter a price.';
+                          }
+                          if (double.tryParse(value) == null) {
+                            return 'Please enter valid number.';
+                          }
+                          if (double.parse(value) <= 0) {
+                            return 'Please enter a number greater then zero.';
+                          }
+                          return null;
+                        },
+                        onSaved: (value) {
+                          _editedProduct = Book(
+                              id: '',
+                              title: _editedProduct.title,
+                              author: _editedProduct.author,
+                              price: double.parse(value!),
+                              image: _editedProduct.image);
+                        },
+                      ),
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: <Widget>[
+                          Container(
+                            width: 100,
+                            height: 100,
+                            margin: EdgeInsets.only(top: 10, right: 10),
+                            decoration: BoxDecoration(
+                                border:
+                                    Border.all(width: 1, color: Colors.grey)),
+                            child: _imageController.text.isEmpty
+                                ? Text('add image URL')
+                                : FittedBox(
+                                    child: Image.network(
+                                      _imageController.text,
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                          ),
+                          Expanded(
+                              child: TextFormField(
+                            decoration: InputDecoration(labelText: 'Image Url'),
+                            keyboardType: TextInputType.url,
+                            textInputAction: TextInputAction.done,
+                            controller: _imageController,
+                            focusNode: _imageFocusNode,
+                            validator: (value) {
+                              if (value!.isEmpty) {
+                                return 'Please enter an image URL';
+                              }
+                              if (!value.startsWith('http') &&
+                                  !value.startsWith('https')) {
+                                return 'Please entera valid URL';
+                              }
+                              if (!value.endsWith('.png') &&
+                                  !value.endsWith('.jpg') &&
+                                  !value.endsWith('.jpeg')) {
+                                return 'Please enter valid image URL';
+                              }
+                              return null;
+                            },
+                            onSaved: (value) {
+                              _editedProduct = Book(
+                                  id: '',
+                                  title: _editedProduct.title,
+                                  author: _editedProduct.author,
+                                  price: _editedProduct.price,
+                                  image: value!);
+                            },
+                          ))
+                        ],
+                      )
+                    ],
+                  )),
+            ),
     );
   }
 }
