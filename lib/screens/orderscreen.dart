@@ -4,44 +4,36 @@ import 'package:provider/provider.dart';
 import 'package:bookstoreapp/providers/orders.dart' show Orders;
 import 'package:bookstoreapp/utils/orderitem.dart';
 
-class OrderScreen extends StatefulWidget {
+class OrderScreen extends StatelessWidget {
   static const routeName = '/orders';
 
   @override
-  State<OrderScreen> createState() => _OrderScreenState();
-}
-
-class _OrderScreenState extends State<OrderScreen> {
-  var isloading = false;
-  @override
-  void initState() {
-    Future.delayed(Duration.zero).then((_) async {
-      setState(() {
-        isloading = true;
-      });
-      await Provider.of<Orders>(context, listen: false).fetchOrders();
-      setState(() {
-        isloading = false;
-      });
-    });
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    final orderItem = Provider.of<Orders>(context);
+    print('inside build');
     return Scaffold(
       appBar: AppBar(
         title: Text('Your Orders'),
       ),
       drawer: AppDrawer(),
-      body: isloading
-          ? Center(
-              child: CircularProgressIndicator(),
-            )
-          : ListView.builder(
-              itemCount: orderItem.orders.length,
-              itemBuilder: (ctx, index) => OrderItem(orderItem.orders[index])),
+      body: FutureBuilder(
+          future: Provider.of<Orders>(context, listen: false).fetchOrders(),
+          builder: (c, dataSnapShot) {
+            if (dataSnapShot.connectionState == ConnectionState.waiting) {
+              return Center(
+                child: CircularProgressIndicator(),
+              );
+            } else if (dataSnapShot.error != null) {
+              Center(
+                child: Text('error occured..!!'),
+              );
+            }
+            return Consumer<Orders>(
+                builder: (ctx, orderItem, child) => ListView.builder(
+                      itemCount: orderItem.orders.length,
+                      itemBuilder: (ctx, index) =>
+                          OrderItem(orderItem.orders[index]),
+                    ));
+          }),
     );
   }
 }
