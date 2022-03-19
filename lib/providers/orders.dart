@@ -23,6 +23,38 @@ class Orders with ChangeNotifier {
     return [..._orders];
   }
 
+  Future<void> fetchOrders() async {
+    var url =
+        'https://bookstoreapp-1-default-rtdb.asia-southeast1.firebasedatabase.app/orders.json';
+    final response = await http.get(Uri.parse(url));
+    final extractedData = json.decode(response.body) as Map<String, dynamic>;
+    if (extractedData == null) {
+      return;
+    }
+    final List<OrderItem> loadedOrders = [];
+    print(extractedData);
+    extractedData.forEach((ordId, orderData) {
+      loadedOrders.add(
+        OrderItem(
+          id: ordId,
+          amount: orderData['amount'],
+          dateTime: DateTime.parse(orderData['dateTime']),
+          products: (orderData['products'] as List<dynamic>)
+              .map(
+                (item) => CartItem(
+                    id: item['id'],
+                    title: item['title'],
+                    quantity: item['quantity'],
+                    price: item['price']),
+              )
+              .toList(),
+        ),
+      );
+    });
+    _orders = loadedOrders;
+    notifyListeners();
+  }
+
   Future<void> addOrders(List<CartItem> cartProducts, double total) async {
     var url =
         'https://bookstoreapp-1-default-rtdb.asia-southeast1.firebasedatabase.app/orders.json';
