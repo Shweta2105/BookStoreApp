@@ -82,7 +82,7 @@ class _CustomAppBarState extends State<CustomAppBar> {
                     },
                   ),
                 ),
-                const CustomPopMenu()
+                //const CustomPopMenu()
               ],
             ),
           ),

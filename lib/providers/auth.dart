@@ -6,7 +6,7 @@ import 'dart:convert';
 class Auth with ChangeNotifier {
   String? _token;
   DateTime? _expiryDate;
-  String _userId = '';
+  String? _userId;
 
   bool get isAuth {
     return token != null;
@@ -19,6 +19,10 @@ class Auth with ChangeNotifier {
       return _token;
     }
     return null;
+  }
+
+  String? get userId {
+    return _userId;
   }
 
   Future<void> _authenticate(
@@ -44,6 +48,9 @@ class Auth with ChangeNotifier {
       );
       print("----_token-------");
       print(_token);
+      print('--------------userId');
+      print(responseData['localId']);
+      print(_userId);
       print("...........response token........");
       print(responseData['idToken']);
       notifyListeners();
@@ -76,5 +83,12 @@ class Auth with ChangeNotifier {
     //       'returnSecureToken': true,
     //     }));
     // print(json.decode(response.body));
+  }
+
+  void logOut() {
+    _token = null;
+    _userId = null;
+    _expiryDate = null;
+    notifyListeners();
   }
 }

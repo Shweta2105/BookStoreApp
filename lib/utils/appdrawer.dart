@@ -1,7 +1,9 @@
+import 'package:bookstoreapp/providers/auth.dart';
 import 'package:bookstoreapp/screens/home.dart';
 import 'package:bookstoreapp/screens/managescreen.dart';
 import 'package:flutter/material.dart';
 import 'package:bookstoreapp/screens/orderscreen.dart';
+import 'package:provider/provider.dart';
 
 class AppDrawer extends StatelessWidget {
   const AppDrawer({Key? key}) : super(key: key);
@@ -33,11 +35,23 @@ class AppDrawer extends StatelessWidget {
           ),
           Divider(),
           ListTile(
-            leading: Icon(Icons.edit),
-            title: Text('Manage Products'),
+            leading: const Icon(Icons.edit),
+            title: const Text('Manage Products'),
             onTap: () {
               Navigator.of(context)
                   .pushReplacementNamed(ManageScreen.routeName);
+            },
+          ),
+          const Divider(),
+          ListTile(
+            leading: const Icon(
+              Icons.exit_to_app,
+            ),
+            title: Text('Log Out'),
+            onTap: () {
+              Navigator.of(context).pop;
+
+              Provider.of<Auth>(context, listen: false).logOut();
             },
           )
         ],

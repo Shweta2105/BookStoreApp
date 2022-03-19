@@ -30,19 +30,31 @@ class MyApp extends StatelessWidget {
           value: Auth(),
         ),
         ChangeNotifierProxyProvider<Auth, Books>(
-          create: (_) => Books('', []),
+          create: (_) => Books('', '', []),
           update: (ctx, auth, previousBooks) {
             print('-**************at main************');
             print(auth.token);
             print('*****************************');
-            return Books(auth.token ?? "",
+            print(auth.userId);
+            return Books(auth.token ?? "", auth.userId ?? "",
                 previousBooks == null ? [] : previousBooks.item);
           },
         ),
         ChangeNotifierProvider.value(
           value: Cart(),
         ),
-        ChangeNotifierProvider.value(value: Orders())
+        ChangeNotifierProxyProvider<Auth, Orders>(
+          create: (_) => Orders('', '', []),
+          update: (ctx, auth, previousOrders) {
+            print('-**************at main************');
+            print(auth.token);
+            print('*****************************');
+            print(auth.userId);
+            print('-------orders--userId in main......');
+            return Orders(auth.token ?? "", auth.userId ?? "",
+                previousOrders == null ? [] : previousOrders.orders);
+          },
+        ),
       ],
       child: MaterialApp(
           title: 'Book Store App',

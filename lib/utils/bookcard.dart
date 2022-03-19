@@ -53,7 +53,7 @@ class _BookCardState extends State<BookCard> {
                   children: [
                     addToBag == false
                         ? addToBagButton(cart, book, context)
-                        : goToBagButton(context),
+                        : goToBagButton(context)
                   ],
                 ))
           ],
@@ -69,6 +69,9 @@ class _BookCardState extends State<BookCard> {
         child: RaisedButton(
           color: titleColor,
           onPressed: () async {
+            setState(() {
+              addToBag = !addToBag;
+            });
             cart.addItem(book.id, book.price, book.title);
             Scaffold.of(context).hideCurrentSnackBar();
             Scaffold.of(context).showSnackBar(SnackBar(
@@ -80,6 +83,9 @@ class _BookCardState extends State<BookCard> {
               action: SnackBarAction(
                   label: 'UNDO',
                   onPressed: () {
+                    setState(() {
+                      addToBag = !addToBag;
+                    });
                     cart.removeSingleItem(book.id);
                   }),
             ));

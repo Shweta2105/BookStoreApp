@@ -6,7 +6,8 @@ import 'dart:convert';
 
 class Books with ChangeNotifier {
   final String authToken;
-  Books(this.authToken, this._item);
+  final String userId;
+  Books(this.authToken, this.userId, this._item);
 
   List<Book> _item = [
     // Book(
@@ -121,7 +122,7 @@ class Books with ChangeNotifier {
       print(response.statusCode);
       print(response.body);
       print('----------------------');
-
+      print('userId--------${userId}----------');
       extractedData.forEach((prodId, prodData) {
         loadedProducts.add(Book(
             id: prodId,
@@ -135,13 +136,14 @@ class Books with ChangeNotifier {
       print(_item);
       notifyListeners();
     } catch (e) {
-      throw (e);
+      print(e);
+      // throw (e);
     }
   }
 
   Future<void> addBook(Book book) async {
     var url =
-        'https://bookstoreapp-1-default-rtdb.asia-southeast1.firebasedatabase.app/bookstore.json';
+        'https://bookstoreapp-1-default-rtdb.asia-southeast1.firebasedatabase.app/bookstore.json?auth=$authToken';
     try {
       final response = await http.post(
         (Uri.parse(url)),
@@ -150,6 +152,7 @@ class Books with ChangeNotifier {
           'author': book.author,
           'image': book.image,
           'price': book.price,
+          'userId': userId,
         }),
       );
 
@@ -173,7 +176,7 @@ class Books with ChangeNotifier {
     final prodIndex = _item.indexWhere((prod) => prod.id == id);
     if (prodIndex >= 0) {
       var url =
-          'https://bookstoreapp-1-default-rtdb.asia-southeast1.firebasedatabase.app/bookstore/$id.json';
+          'https://bookstoreapp-1-default-rtdb.asia-southeast1.firebasedatabase.app/bookstore/$id.json?auth=$authToken';
       await http.patch(Uri.parse(url),
           body: json.encode({
             'title': newBook.title,
@@ -190,7 +193,7 @@ class Books with ChangeNotifier {
 
   Future<void> deleteBook(String id) async {
     var url =
-        'https://bookstoreapp-1-default-rtdb.asia-southeast1.firebasedatabase.app/bookstore/$id.json';
+        'https://bookstoreapp-1-default-rtdb.asia-southeast1.firebasedatabase.app/bookstore/$id.json?auth=$authToken';
     final existingProductIndex = _item.indexWhere((prod) => prod.id == id);
     Book? existingProduct = _item[existingProductIndex];
     _item.removeAt(existingProductIndex);
