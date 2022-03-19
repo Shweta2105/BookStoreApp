@@ -1,4 +1,4 @@
-import 'package:bookstoreapp/screens/login.dart';
+import 'package:bookstoreapp/screens/authscreen.dart';
 import 'package:flutter/material.dart';
 
 class WelcomeScreen extends StatefulWidget {
@@ -39,9 +39,9 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
               //Navigator.pushNamed(context, '/home');
               // final user = AuthService.firebase().currentUser;
               // if (user != null) {
-              Navigator.pushNamed(context, '/home');
+              // Navigator.pushNamed(context, '/home');
               //} else {
-              //  Navigator.pushNamed(context, '/login');
+              Navigator.pushNamed(context, '/login');
               //}
             },
             child: const Text(

@@ -22,7 +22,7 @@ class Auth with ChangeNotifier {
   Future<void> signup(String? email, String? password) async {
     return _authenticate(email, password, 'signUp');
     // const url =
-    //     'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyDSp_Xwy55w2_bjWwdu5DXGVR10UolI48A';
+    //     'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyDE5FzbiVAPPzJtP_ZmvJ5IBnYhJTDYBOY';
     // final response = await http.post(Uri.parse(url),
     //     body: json.encode({
     //       'email': email,
@@ -35,7 +35,7 @@ class Auth with ChangeNotifier {
   Future<void> login(String? email, String? password) async {
     return _authenticate(email, password, 'signInWithPassword');
     // const url =
-    //     'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyDSp_Xwy55w2_bjWwdu5DXGVR10UolI48A';
+    //     'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyDE5FzbiVAPPzJtP_ZmvJ5IBnYhJTDYBOY';
     // final response = await http.post(Uri.parse(url),
     //     body: json.encode({
     //       'email': email,
