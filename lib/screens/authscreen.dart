@@ -1,3 +1,4 @@
+import 'package:bookstoreapp/screens/home.dart';
 import 'package:bookstoreapp/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'dart:math';
@@ -112,10 +113,12 @@ class _AuthCardState extends State<AuthCard> {
       //login
       await Provider.of<Auth>(context, listen: false)
           .login(_authData['email'], _authData['password']);
+      Navigator.of(context).pushNamed(HomeScreen.routeName);
     } else {
       //signup
       await Provider.of<Auth>(context, listen: false)
           .signup(_authData['email'], _authData['password']);
+      Navigator.of(context).pushNamed('/');
     }
     setState(() {
       _isLoading = false;

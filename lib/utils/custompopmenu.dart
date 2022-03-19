@@ -1,6 +1,3 @@
-import 'package:bookstoreapp/screens/myorders.dart';
-import 'package:bookstoreapp/screens/wishlist.dart';
-
 import 'package:bookstoreapp/utils/constants.dart';
 import 'package:flutter/material.dart';
 
@@ -26,13 +23,13 @@ class CustomPopMenu extends StatelessWidget {
               }
               break;
             case MenuAction.wishList:
-              Navigator.of(context)
-                  .push(MaterialPageRoute(builder: (context) => WishList()));
-              print("-----------wishlist------------");
+              // Navigator.of(context)
+              //     .push(MaterialPageRoute(builder: (context) => WishList()));
+              // print("-----------wishlist------------");
               break;
             case MenuAction.orders:
-              Navigator.of(context)
-                  .push(MaterialPageRoute(builder: (context) => MyOrders()));
+              // Navigator.of(context)
+              //     .push(MaterialPageRoute(builder: (context) => MyOrders()));
               break;
           }
         },

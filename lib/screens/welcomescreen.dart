@@ -1,5 +1,8 @@
+import 'package:bookstoreapp/providers/auth.dart';
 import 'package:bookstoreapp/screens/authscreen.dart';
+import 'package:bookstoreapp/screens/home.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class WelcomeScreen extends StatefulWidget {
   @override
@@ -10,6 +13,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
   bool isLoggedin = false;
   @override
   Widget build(BuildContext context) {
+    final authUser = Provider.of<Auth>(context, listen: false);
     return Container(
       width: double.infinity,
       height: double.infinity,
@@ -36,13 +40,14 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
           RaisedButton(
             color: Colors.transparent,
             onPressed: () {
-              //Navigator.pushNamed(context, '/home');
-              // final user = AuthService.firebase().currentUser;
-              // if (user != null) {
-              // Navigator.pushNamed(context, '/home');
-              //} else {
-              Navigator.pushNamed(context, '/login');
-              //}
+              checkLogin(authUser, context);
+              // //Navigator.pushNamed(context, '/home');
+              // // final user = AuthService.firebase().currentUser;
+              // // if (user != null) {
+              // // Navigator.pushNamed(context, '/home');
+              // //} else {
+              // Navigator.pushNamed(context, '/login');
+              // //}
             },
             child: const Text(
               "Lets get started with reading....",
@@ -55,5 +60,18 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
         ],
       ),
     );
+  }
+
+  void checkLogin(Auth authUser, BuildContext context) {
+    if (authUser.isAuth) {
+      setState(() {
+        isLoggedin = true;
+      });
+      print('login success ');
+      print('----------------------------------');
+      Navigator.of(context).pushNamed(HomeScreen.routeName);
+    } else {
+      Navigator.pushNamed(context, '/login');
+    }
   }
 }
