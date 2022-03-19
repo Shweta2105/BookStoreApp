@@ -69,7 +69,7 @@ class _BookCardState extends State<BookCard> {
         child: RaisedButton(
           color: titleColor,
           onPressed: () async {
-            cart.addItem(book.id!, book.price!, book.title!);
+            cart.addItem(book.id, book.price, book.title);
             Scaffold.of(context).hideCurrentSnackBar();
             Scaffold.of(context).showSnackBar(SnackBar(
               content: const Text(
@@ -80,7 +80,7 @@ class _BookCardState extends State<BookCard> {
               action: SnackBarAction(
                   label: 'UNDO',
                   onPressed: () {
-                    cart.removeSingleItem(book.id!);
+                    cart.removeSingleItem(book.id);
                   }),
             ));
           },
@@ -97,7 +97,7 @@ class _BookCardState extends State<BookCard> {
     return Positioned(
       left: 30,
       child: Image.network(
-        book.image!,
+        book.image,
 
         // showData[index]['image'],
         width: 110,
@@ -138,12 +138,12 @@ class _BookCardState extends State<BookCard> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              book.title!,
+              book.title,
               style:
                   const TextStyle(fontSize: fontS, fontWeight: FontWeight.bold),
             ),
             Text(
-              book.author!,
+              book.author,
               style: const TextStyle(
                 fontSize: fontS,
               ),

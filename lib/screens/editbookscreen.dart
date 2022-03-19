@@ -14,7 +14,8 @@ class _EditBookScreenState extends State<EditBookScreen> {
   final _form = GlobalKey<FormState>();
   var _editedProduct = Book(id: '', title: '', author: '', price: 0, image: '');
   final _priceFocusNode = FocusNode();
-  final _descriptionFocusNode = FocusNode();
+
+  final _authorFocusNode = FocusNode();
 
   final _imageController = TextEditingController();
   final _imageFocusNode = FocusNode();
@@ -44,13 +45,13 @@ class _EditBookScreenState extends State<EditBookScreen> {
             Provider.of<Books>(context, listen: false).findById(prodId);
 
         _initValues = {
-          'title': _editedProduct.title!,
-          'author': _editedProduct.author!,
+          'title': _editedProduct.title,
+          'author': _editedProduct.author,
           'price': _editedProduct.price.toString(),
           'image': '',
         };
 
-        _imageController.text = _editedProduct.image!;
+        _imageController.text = _editedProduct.image;
       }
     }
 
@@ -63,7 +64,7 @@ class _EditBookScreenState extends State<EditBookScreen> {
   void dispose() {
     _imageFocusNode.removeListener(_updateImage);
     _priceFocusNode.dispose();
-    _descriptionFocusNode.dispose();
+    _authorFocusNode.dispose();
     _imageController.dispose();
     _imageFocusNode.dispose();
     super.dispose();
@@ -85,8 +86,8 @@ class _EditBookScreenState extends State<EditBookScreen> {
       isLoading = true;
     });
     if (_editedProduct.id != '') {
-      Provider.of<Books>(context, listen: false)
-          .updateBook(_editedProduct.id!, _editedProduct);
+      await Provider.of<Books>(context, listen: false)
+          .updateBook(_editedProduct.id, _editedProduct);
       setState(() {
         isLoading = false;
       });
@@ -141,10 +142,11 @@ class _EditBookScreenState extends State<EditBookScreen> {
                   child: ListView(
                     children: <Widget>[
                       TextFormField(
+                        initialValue: _initValues['title'],
                         decoration: InputDecoration(labelText: 'Title'),
                         textInputAction: TextInputAction.next,
                         onFieldSubmitted: (_) {
-                          FocusScope.of(context).requestFocus(_priceFocusNode);
+                          FocusScope.of(context).requestFocus(_authorFocusNode);
                         },
                         validator: (value) {
                           if (value!.isEmpty) {
@@ -162,6 +164,7 @@ class _EditBookScreenState extends State<EditBookScreen> {
                         },
                       ),
                       TextFormField(
+                        initialValue: _initValues['author'],
                         decoration: InputDecoration(labelText: 'Author'),
                         textInputAction: TextInputAction.next,
                         onFieldSubmitted: (_) {
@@ -183,13 +186,13 @@ class _EditBookScreenState extends State<EditBookScreen> {
                         },
                       ),
                       TextFormField(
+                        initialValue: _initValues['price'],
                         decoration: InputDecoration(labelText: 'Price'),
                         textInputAction: TextInputAction.next,
                         keyboardType: TextInputType.number,
                         focusNode: _priceFocusNode,
                         onFieldSubmitted: (_) {
-                          FocusScope.of(context)
-                              .requestFocus(_descriptionFocusNode);
+                          FocusScope.of(context).requestFocus(_imageFocusNode);
                         },
                         validator: (value) {
                           if (value!.isEmpty) {

@@ -1,3 +1,4 @@
+import 'package:bookstoreapp/model/httpexecption.dart';
 import 'package:bookstoreapp/providers/book.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -156,9 +157,18 @@ class Books with ChangeNotifier {
     }
   }
 
-  void updateBook(String id, Book newBook) {
+  Future<void> updateBook(String id, Book newBook) async {
     final prodIndex = _item.indexWhere((prod) => prod.id == id);
     if (prodIndex >= 0) {
+      var url =
+          'https://bookstoreapp-1-default-rtdb.asia-southeast1.firebasedatabase.app/bookstore/$id.json';
+      await http.patch(Uri.parse(url),
+          body: json.encode({
+            'title': newBook.title,
+            'author': newBook.author,
+            'image': newBook.image,
+            'price': newBook.price,
+          }));
       _item[prodIndex] = newBook;
       notifyListeners();
     } else {
@@ -166,8 +176,20 @@ class Books with ChangeNotifier {
     }
   }
 
-  void deleteBook(String id) {
-    _item.removeWhere((book) => book.id == id);
+  Future<void> deleteBook(String id) async {
+    var url =
+        'https://bookstoreapp-1-default-rtdb.asia-southeast1.firebasedatabase.app/bookstore/$id.json';
+    final existingProductIndex = _item.indexWhere((prod) => prod.id == id);
+    Book? existingProduct = _item[existingProductIndex];
+    _item.removeAt(existingProductIndex);
     notifyListeners();
+    final response = await http.delete(Uri.parse(url));
+    print(response.statusCode);
+    if (response.statusCode >= 400) {
+      _item.insert(existingProductIndex, existingProduct);
+      notifyListeners();
+      throw HttpException('Could not delete product');
+    }
+    existingProduct = null;
   }
 }

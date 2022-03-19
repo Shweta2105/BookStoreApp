@@ -29,7 +29,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
       fliterBooks = _books
           .where(
-              (element) => element.title!.toLowerCase().contains(searchString))
+              (element) => element.title.toLowerCase().contains(searchString))
           .toList();
     });
   }

@@ -1,4 +1,5 @@
 import 'package:bookstoreapp/providers/books.dart';
+import 'package:bookstoreapp/screens/editbookscreen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -22,7 +23,10 @@ class ManageItem extends StatelessWidget {
         child: Row(
           children: <Widget>[
             IconButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.of(context)
+                      .pushNamed(EditBookScreen.routeName, arguments: id);
+                },
                 icon: Icon(
                   Icons.edit,
                   color: Theme.of(context).primaryColor,

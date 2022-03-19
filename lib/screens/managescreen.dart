@@ -9,6 +9,11 @@ import 'package:bookstoreapp/utils/appdrawer.dart';
 class ManageScreen extends StatelessWidget {
   static const routeName = '/manageScreen';
 
+  Future<void> _refreshBooks(BuildContext context) async {
+    final productData =
+        await Provider.of<Books>(context, listen: false).fetchBooks();
+  }
+
   @override
   Widget build(BuildContext context) {
     final bookData = Provider.of<Books>(context);
@@ -27,17 +32,20 @@ class ManageScreen extends StatelessWidget {
         ],
       ),
       drawer: AppDrawer(),
-      body: Padding(
-        padding: EdgeInsets.all(10),
-        child: ListView.builder(
-            itemCount: bookData.item.length,
-            itemBuilder: (_, i) => Column(
-                  children: [
-                    ManageItem(bookData.item[i].id!, bookData.item[i].title!,
-                        bookData.item[i].image!),
-                    Divider(),
-                  ],
-                )),
+      body: RefreshIndicator(
+        onRefresh: () => _refreshBooks(context),
+        child: Padding(
+          padding: EdgeInsets.all(10),
+          child: ListView.builder(
+              itemCount: bookData.item.length,
+              itemBuilder: (_, i) => Column(
+                    children: [
+                      ManageItem(bookData.item[i].id, bookData.item[i].title,
+                          bookData.item[i].image),
+                      Divider(),
+                    ],
+                  )),
+        ),
       ),
     );
   }
