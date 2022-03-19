@@ -5,6 +5,9 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class Books with ChangeNotifier {
+  final String authToken;
+  Books(this.authToken, this._item);
+
   List<Book> _item = [
     // Book(
     //   id: "1",
@@ -105,11 +108,20 @@ class Books with ChangeNotifier {
 
   Future<void> fetchBooks() async {
     var url =
-        'https://bookstoreapp-1-default-rtdb.asia-southeast1.firebasedatabase.app/bookstore.json';
+        'https://bookstoreapp-1-default-rtdb.asia-southeast1.firebasedatabase.app/bookstore.json?auth=$authToken';
     try {
       final response = await http.get(Uri.parse(url));
       final extractedData = json.decode(response.body) as Map<String, dynamic>;
       final List<Book> loadedProducts = [];
+      if (extractedData == null) {
+        return;
+      }
+      print("------------fetch method");
+      print(authToken);
+      print(response.statusCode);
+      print(response.body);
+      print('----------------------');
+
       extractedData.forEach((prodId, prodData) {
         loadedProducts.add(Book(
             id: prodId,
