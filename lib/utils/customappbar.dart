@@ -26,7 +26,7 @@ class _CustomAppBarState extends State<CustomAppBar> {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      backgroundColor: Color.fromARGB(255, 128, 10, 2),
+      backgroundColor: appbarRedColor,
       elevation: 1,
       bottom: PreferredSize(
         preferredSize: Size.fromHeight(20),
@@ -35,7 +35,7 @@ class _CustomAppBarState extends State<CustomAppBar> {
           height: heightL,
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
-              color: white,
+              color: whiteColor,
               boxShadow: const [
                 BoxShadow(
                   color: Colors.grey,
@@ -48,6 +48,13 @@ class _CustomAppBarState extends State<CustomAppBar> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
+                IconButton(
+                    icon: Icon(
+                      Icons.menu,
+                      size: 30,
+                    ),
+                    color: Colors.black.withOpacity(0.7),
+                    onPressed: () => AppDrawer()),
                 SizedBox(
                   width: 10,
                 ),
@@ -74,7 +81,7 @@ class _CustomAppBarState extends State<CustomAppBar> {
                     color: Theme.of(context).accentColor,
                   ),
                   child: IconButton(
-                    icon: Icon(
+                    icon: const Icon(
                       Icons.shopping_cart,
                     ),
                     onPressed: () {

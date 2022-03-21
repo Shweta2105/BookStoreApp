@@ -1,3 +1,4 @@
+import 'package:bookstoreapp/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:bookstoreapp/providers/cart.dart';
@@ -24,38 +25,39 @@ class CartItem extends StatelessWidget {
         return showDialog(
             context: context,
             builder: (c) => AlertDialog(
-                  backgroundColor: Color.fromARGB(255, 196, 202, 223),
-                  title: Text('Are you sure?'),
-                  content: Text('Do you want to delete the item from cart..?'),
+                  backgroundColor: const Color.fromARGB(255, 196, 202, 223),
+                  title: const Text('Are you sure?'),
+                  content:
+                      const Text('Do you want to delete the item from cart..?'),
                   actions: [
                     FlatButton(
                         onPressed: () {
                           Navigator.of(c).pop(false);
                         },
-                        child: Text('No')),
+                        child: const Text('No')),
                     FlatButton(
                         onPressed: () {
                           Navigator.of(c).pop(true);
                         },
-                        child: Text('Delete')),
+                        child: const Text('Delete')),
                   ],
                 ));
       },
       background: Container(
         color: Theme.of(context).errorColor,
-        child: Icon(
+        child: const Icon(
           Icons.delete,
           color: Colors.white,
           size: 30,
         ),
         alignment: Alignment.centerRight,
-        padding: EdgeInsets.only(right: 20),
-        margin: EdgeInsets.symmetric(horizontal: 15, vertical: 4),
+        padding: const EdgeInsets.only(right: 20),
+        margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 4),
       ),
       child: Card(
-        margin: EdgeInsets.symmetric(horizontal: 15, vertical: 4),
+        margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 4),
         child: Padding(
-          padding: EdgeInsets.all(8),
+          padding: boxMargin(),
           child: ListTile(
             leading: CircleAvatar(
               radius: 25,

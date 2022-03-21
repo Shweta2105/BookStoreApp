@@ -12,18 +12,18 @@ class OrderScreen extends StatelessWidget {
     print('inside build');
     return Scaffold(
       appBar: AppBar(
-        title: Text('Your Orders'),
+        title: const Text('Your Orders'),
       ),
-      drawer: AppDrawer(),
+      drawer: const AppDrawer(),
       body: FutureBuilder(
           future: Provider.of<Orders>(context, listen: false).fetchOrders(),
           builder: (c, dataSnapShot) {
             if (dataSnapShot.connectionState == ConnectionState.waiting) {
-              return Center(
+              return const Center(
                 child: CircularProgressIndicator(),
               );
             } else if (dataSnapShot.error != null) {
-              Center(
+              const Center(
                 child: Text('error occured..!!'),
               );
             }

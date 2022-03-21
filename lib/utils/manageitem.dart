@@ -8,7 +8,7 @@ class ManageItem extends StatelessWidget {
   final String title;
   final String image;
 
-  ManageItem(this.id, this.title, this.image);
+  const ManageItem(this.id, this.title, this.image);
 
   @override
   Widget build(BuildContext context) {

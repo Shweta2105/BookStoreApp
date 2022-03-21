@@ -26,9 +26,9 @@ class _BookCardState extends State<BookCard> {
         print(book.id);
       },
       child: Container(
-        margin: const EdgeInsets.all(10),
+        margin: boxMargin(),
         padding: const EdgeInsets.only(left: 5, right: 5),
-        height: 300,
+        height: heightXXl,
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(5),
@@ -93,7 +93,7 @@ class _BookCardState extends State<BookCard> {
           child: const Text(
             "ADD TO BAG",
             style: TextStyle(
-              fontSize: 10,
+              fontSize: fontS,
             ),
           ),
         ));
@@ -129,8 +129,8 @@ class _BookCardState extends State<BookCard> {
           },
           child: const Text(
             "GO TO BAG",
-            style: const TextStyle(
-              fontSize: 10,
+            style: TextStyle(
+              fontSize: fontS,
             ),
           ),
         ));

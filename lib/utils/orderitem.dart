@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:bookstoreapp/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:bookstoreapp/providers/orders.dart' as ord;
 import 'package:intl/intl.dart';
@@ -18,7 +19,7 @@ class _OrderItemState extends State<OrderItem> {
   @override
   Widget build(BuildContext context) {
     return Card(
-        margin: EdgeInsets.all(10),
+        margin: boxMargin(),
         child: Column(
           children: <Widget>[
             ListTile(
@@ -50,7 +51,7 @@ class _OrderItemState extends State<OrderItem> {
                                 ),
                                 Text(
                                   '${prod.quantity}x \$${prod.price}',
-                                  style: const TextStyle(fontSize: 18),
+                                  style: const TextStyle(fontSize: fontM),
                                 )
                               ],
                             ))

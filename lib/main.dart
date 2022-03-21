@@ -68,7 +68,7 @@ class MyApp extends StatelessWidget {
             OrderScreen.routeName: (context) => OrderScreen(),
             ManageScreen.routeName: (context) => ManageScreen(),
             EditBookScreen.routeName: (context) => EditBookScreen(),
-            '/login': (context) => const AuthScreen(),
+            AuthScreen.routeName: (context) => AuthScreen(),
           }),
     );
   }

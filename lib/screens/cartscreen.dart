@@ -1,5 +1,6 @@
 import 'package:bookstoreapp/providers/cart.dart' show Cart;
 import 'package:bookstoreapp/providers/orders.dart';
+import 'package:bookstoreapp/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:bookstoreapp/utils/cartItem.dart';
@@ -12,32 +13,32 @@ class CartScreen extends StatelessWidget {
     final myCart = Provider.of<Cart>(context);
     return Scaffold(
       appBar: AppBar(
-        title: Text('Your Cart'),
+        title: const Text('Your Cart'),
       ),
       body: Column(
         children: <Widget>[
           Card(
-            margin: EdgeInsets.all(10),
+            margin: boxMargin(),
             child: Padding(
-              padding: EdgeInsets.all(10),
+              padding: boxMargin(),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
-                  Text(
+                  const Text(
                     'Total:',
                     style: TextStyle(
                       fontSize: 20,
                     ),
                   ),
-                  Spacer(),
+                  const Spacer(),
                   Chip(label: Text('\$${myCart.totalAmount}')),
                   OrderButton(myCart: myCart)
                 ],
               ),
             ),
           ),
-          SizedBox(
-            height: 10,
+          const SizedBox(
+            height: heightS,
           ),
           Expanded(
               child: ListView.builder(
@@ -86,7 +87,7 @@ class _OrderButtonState extends State<OrderButton> {
               widget.myCart.clear();
             },
       child: isLoading
-          ? CircularProgressIndicator()
+          ? const CircularProgressIndicator()
           : Text(
               'Order Now',
               style: TextStyle(color: Theme.of(context).primaryColor),

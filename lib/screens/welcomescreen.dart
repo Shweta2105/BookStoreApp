@@ -71,7 +71,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
       print('----------------------------------');
       Navigator.of(context).pushNamed(HomeScreen.routeName);
     } else {
-      Navigator.pushNamed(context, '/login');
+      Navigator.pushNamed(context, AuthScreen.routeName);
     }
   }
 }

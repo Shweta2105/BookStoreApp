@@ -1,5 +1,6 @@
 import 'package:bookstoreapp/providers/book.dart';
 import 'package:bookstoreapp/providers/books.dart';
+import 'package:bookstoreapp/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -132,18 +133,18 @@ class _EditBookScreenState extends State<EditBookScreen> {
         ],
       ),
       body: isLoading
-          ? Center(
+          ? const Center(
               child: CircularProgressIndicator(),
             )
           : Padding(
-              padding: const EdgeInsets.all(15.0),
+              padding: boxMargin3(),
               child: Form(
                   key: _form,
                   child: ListView(
                     children: <Widget>[
                       TextFormField(
                         initialValue: _initValues['title'],
-                        decoration: InputDecoration(labelText: 'Title'),
+                        decoration: const InputDecoration(labelText: 'Title'),
                         textInputAction: TextInputAction.next,
                         onFieldSubmitted: (_) {
                           FocusScope.of(context).requestFocus(_authorFocusNode);
@@ -165,7 +166,7 @@ class _EditBookScreenState extends State<EditBookScreen> {
                       ),
                       TextFormField(
                         initialValue: _initValues['author'],
-                        decoration: InputDecoration(labelText: 'Author'),
+                        decoration: const InputDecoration(labelText: 'Author'),
                         textInputAction: TextInputAction.next,
                         onFieldSubmitted: (_) {
                           FocusScope.of(context).requestFocus(_priceFocusNode);
@@ -187,7 +188,7 @@ class _EditBookScreenState extends State<EditBookScreen> {
                       ),
                       TextFormField(
                         initialValue: _initValues['price'],
-                        decoration: InputDecoration(labelText: 'Price'),
+                        decoration: const InputDecoration(labelText: 'Price'),
                         textInputAction: TextInputAction.next,
                         keyboardType: TextInputType.number,
                         focusNode: _priceFocusNode,
@@ -221,7 +222,7 @@ class _EditBookScreenState extends State<EditBookScreen> {
                           Container(
                             width: 100,
                             height: 100,
-                            margin: EdgeInsets.only(top: 10, right: 10),
+                            margin: const EdgeInsets.only(top: 10, right: 10),
                             decoration: BoxDecoration(
                                 border:
                                     Border.all(width: 1, color: Colors.grey)),
@@ -236,7 +237,8 @@ class _EditBookScreenState extends State<EditBookScreen> {
                           ),
                           Expanded(
                               child: TextFormField(
-                            decoration: InputDecoration(labelText: 'Image Url'),
+                            decoration:
+                                const InputDecoration(labelText: 'Image Url'),
                             keyboardType: TextInputType.url,
                             textInputAction: TextInputAction.done,
                             controller: _imageController,

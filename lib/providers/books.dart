@@ -141,6 +141,35 @@ class Books with ChangeNotifier {
     }
   }
 
+  Future<void> addBooks(Book book) async {
+    var url =
+        'https://bookstoreapp-1-default-rtdb.asia-southeast1.firebasedatabase.app/bookstore.json?auth=$authToken';
+    try {
+      final response = await http.post(
+        (Uri.parse(url)),
+        body: json.encode({
+          'title': book.title,
+          'author': book.author,
+          'image': book.image,
+          'price': book.price,
+        }),
+      );
+      print(json.decode(response.body));
+      final newProduct = Book(
+        id: json.decode(response.body)['name'],
+        title: book.title,
+        author: book.author,
+        price: book.price,
+        image: book.image,
+      );
+      _item.add(newProduct);
+      notifyListeners();
+    } catch (onError) {
+      print(onError);
+      throw onError;
+    }
+  }
+
   Future<void> addBook(Book book) async {
     var url =
         'https://bookstoreapp-1-default-rtdb.asia-southeast1.firebasedatabase.app/bookstore.json?auth=$authToken';

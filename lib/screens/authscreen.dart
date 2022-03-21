@@ -8,7 +8,7 @@ import '../providers/auth.dart';
 enum AuthMode { Signup, Login }
 
 class AuthScreen extends StatefulWidget {
-  const AuthScreen({Key? key}) : super(key: key);
+  static const String routeName = '/auth';
 
   @override
   State<AuthScreen> createState() => _AuthScreenState();
@@ -40,7 +40,7 @@ class _AuthScreenState extends State<AuthScreen> {
     final deviceSize = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color.fromARGB(255, 180, 173, 173),
+        backgroundColor: appbarColor,
         elevation: 0.0,
       ),
       body: SingleChildScrollView(
@@ -146,13 +146,13 @@ class _AuthCardState extends State<AuthCard> {
       child: Container(
         height: _authMode == AuthMode.Signup ? 320 : 260,
         width: deviceSize.width * 0.75,
-        padding: EdgeInsets.all(16.0),
+        padding: boxMargin3(),
         child: Form(
             key: _formKey,
             child: SingleChildScrollView(
               child: Column(children: <Widget>[
                 TextFormField(
-                  decoration: InputDecoration(labelText: 'E-mail'),
+                  decoration: const InputDecoration(labelText: 'E-mail'),
                   keyboardType: TextInputType.emailAddress,
                   validator: (value) {
                     if (!value!.contains('@')) {
@@ -164,7 +164,7 @@ class _AuthCardState extends State<AuthCard> {
                   },
                 ),
                 TextFormField(
-                  decoration: InputDecoration(labelText: 'Password'),
+                  decoration: const InputDecoration(labelText: 'Password'),
                   obscureText: true,
                   controller: _passwordController,
                   validator: (value) {
@@ -179,7 +179,8 @@ class _AuthCardState extends State<AuthCard> {
                 if (_authMode == AuthMode.Signup)
                   TextFormField(
                     enabled: _authMode == AuthMode.Signup,
-                    decoration: InputDecoration(labelText: 'Confirm Password'),
+                    decoration:
+                        const InputDecoration(labelText: 'Confirm Password'),
                     obscureText: true,
                     validator: _authMode == AuthMode.Signup
                         ? (value) {
@@ -189,11 +190,11 @@ class _AuthCardState extends State<AuthCard> {
                           }
                         : null,
                   ),
-                SizedBox(
-                  height: 20,
+                const SizedBox(
+                  height: heightM,
                 ),
                 if (_isLoading)
-                  CircularProgressIndicator()
+                  const CircularProgressIndicator()
                 else
                   RaisedButton(
                     child:
@@ -208,7 +209,8 @@ class _AuthCardState extends State<AuthCard> {
                   onPressed: _switchAuthMode,
                   child: Text(
                       '${_authMode == AuthMode.Login ? 'SIGN UP' : 'LOGIN'}  INSTEAD'),
-                  padding: EdgeInsets.symmetric(horizontal: 30, vertical: 4),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 30, vertical: 4),
                   materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                   textColor: Theme.of(context).primaryColor,
                 )

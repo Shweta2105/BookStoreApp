@@ -23,7 +23,7 @@ class DisplayDetails extends StatelessWidget {
         appBar: AppBar(
           title: Text(loadedBook.title),
           automaticallyImplyLeading: false,
-          backgroundColor: white,
+          backgroundColor: whiteColor,
           leading: IconButton(
               onPressed: () {
                 Navigator.of(context).pop();
@@ -118,16 +118,9 @@ class DisplayDetails extends StatelessWidget {
 
   Positioned buttonsToCart(Book book) {
     return Positioned(
-        bottom: 50,
-        left: 50,
-        child: Row(
-          children: <Widget>[
-            cartButton(),
-            SizedBox(
-              width: 20,
-            ),
-            wishlistButton(book)
-          ],
-        ));
+      bottom: 50,
+      left: 50,
+      child: cartButton(),
+    );
   }
 }
